@@ -12,16 +12,24 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     justifyContent: "space-between",
     alignItems: "stretch",
-    alignContent: "stretch"
+    alignContent: "stretch",
   },
   item: {
     backgroundColor: "#FFA",
-    flex: 1
+    flex: 1,
   },
   floatingMenuButton: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    backgroundColor: "#AAA"
+    backgroundColor: "#AAA",
+  },
+  input: {
+    height: 54,
+    backgroundColor: "#FFF",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    marginTop: 4,
+    marginBottom: 16,
   },
 });
 

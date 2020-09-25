@@ -6,6 +6,7 @@
     "@react-navigation/native": "^5.7.4",
     "@react-navigation/stack": "^5.9.1",
     "expo": "~39.0.3",
+    "expo-constants": "~9.2.0",
     "expo-font": "~8.3.0",
     "react": "~16.13.1",
     "react-dom": "~16.13.1",
@@ -14,8 +15,7 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
-    "react-native-web": "0.13.14",
-    "expo-constants": "~9.2.0"
+    "react-native-web": "0.13.14"
   },
   "devDependencies": {
     "@babel/core": "7.11.6",

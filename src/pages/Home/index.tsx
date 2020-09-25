@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   SafeAreaView,
+  TextInput,
   Linking,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
+
+import GroceryList from "../../components/GroceryList";
 import styles from "./styles";
 
 export default function Home() {
   const navigation = useNavigation();
+  const [grocery, setGrocery] = useState("")
 
   function handleAddPurchase() {
     navigation.navigate("Grocery");
@@ -21,6 +25,15 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <View style={styles.item}>
         <Text>Home page</Text>
+        <TextInput
+            style={styles.input}
+            value={grocery}
+            onChangeText={grocery => setGrocery(grocery)}
+            placeholder='Search'
+            placeholderTextColor='#C1BCCC'
+          />
+
+        <GroceryList filter={grocery} />
       </View>
       <View style={styles.floatingMenuButton}>
       <TouchableOpacity
