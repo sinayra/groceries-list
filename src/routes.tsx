@@ -19,7 +19,7 @@ const Routes = () => {
         }}
       >
         <AppStack.Screen name="Home" component={Home} />
-        <AppStack.Screen name="Points" component={Grocery} />
+        <AppStack.Screen name="Grocery" component={Grocery} />
       </AppStack.Navigator>
     </NavigationContainer>
   );
