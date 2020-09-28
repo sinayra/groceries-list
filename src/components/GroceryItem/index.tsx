@@ -4,7 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Entypo } from "@expo/vector-icons";
 import styles from "./styles";
-import { calculateMin, calculateMax, calculateMode, createPricePerUnitArray } from "../../utils/purchaseMath"
+import {
+  calculateMin,
+  calculateMax,
+  calculateMode,
+  createPricePerUnitArray,
+} from "../../utils/purchaseMath";
 
 export interface Purchase {
   date: number;
@@ -41,8 +46,8 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
   }, []);
 
   return (
-    <TouchableOpacity onPress={handleSeeHistory}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={handleSeeHistory}>
         <Text>{name}</Text>
         <View style={styles.prices}>
           <View style={styles.priceItem}>
@@ -59,8 +64,8 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
             <Text>R$ {minimum.toFixed(2)}</Text>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };
 
