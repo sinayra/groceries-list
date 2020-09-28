@@ -7,7 +7,7 @@ import {
   Linking,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { FontAwesome } from "@expo/vector-icons";
+import { RectButton } from "react-native-gesture-handler";
 import styles from "./styles";
 import {
   createPricePerUnitArray,
@@ -43,10 +43,6 @@ export default function Product() {
   const [mode, setMode] = useState(0);
   const [average, setAverage] = useState(0);
 
-  function handleNavigationBack() {
-    navigation.navigate("Home");
-  }
-
   useEffect(() => {
     const pricesPerUnit = createPricePerUnitArray(purchases);
 
@@ -67,7 +63,7 @@ export default function Product() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.item}>
+      <View style={styles.content}>
         <Text>{name}</Text>
 
         <View style={styles.prices}>
@@ -102,11 +98,6 @@ export default function Product() {
         </View>
       </View>
 
-      <View style={styles.floatingMenuButton}>
-        <TouchableOpacity onPress={handleNavigationBack}>
-          <FontAwesome name="step-backward" size={50} color="black" />
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }

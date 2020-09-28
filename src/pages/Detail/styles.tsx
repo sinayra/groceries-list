@@ -22,14 +22,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#AAAFFA",
     paddingBottom: 20,
   },
-  item: {
+  content: {
     backgroundColor: "#FFA",
     flex: 1,
-  },
-  floatingMenuButton: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#AAA",
   },
   prices: {
     backgroundColor: "#CAB",

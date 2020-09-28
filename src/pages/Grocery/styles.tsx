@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
@@ -12,17 +12,33 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     justifyContent: "space-between",
     alignItems: "stretch",
-    alignContent: "stretch"
+    alignContent: "stretch",
   },
-  item: {
+  content: {
     backgroundColor: "#FFA",
-    flex: 1
+    flex: 1,
   },
-  floatingMenuButton: {
+  form: {
+    flex: 1,
+    backgroundColor: "#AAA",
+  },
+  button: {
+    backgroundColor: "#34CB79",
+    height: 60,
     flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#AAA"
+    borderRadius: 10,
+    overflow: "hidden",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  buttonText: {
+    flex: 1,
+    justifyContent: "center",
+    textAlign: "center",
+    color: "#FFFFFF",
+    fontFamily: "Roboto_500Medium",
+    fontSize: 16,
   },
 });
 
-  export default styles;
+export default styles;
