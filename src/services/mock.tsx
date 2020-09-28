@@ -81,6 +81,11 @@ const mock = [
                 date: new Date("2020-09-14"),
                 price: 0.87,
                 quantity: 0.29096989966555183946488294314381
+            },
+            {
+                date: new Date("2020-09-26"),
+                price: 1.32,
+                quantity: 0.440
             }
         ]
     },
