@@ -1,8 +1,10 @@
-import React from "react";
-import { View, Text, Linking } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Linking, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import { Entypo } from '@expo/vector-icons'; 
+import { Entypo } from "@expo/vector-icons";
 import styles from "./styles";
+import { calculateMin, calculateMax, calculateMode, createPricePerUnitArray } from "../../utils/purchaseMath"
 
 export interface Purchase {
   date: Date;
@@ -21,72 +23,44 @@ interface GroceryItemProps {
 
 const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
   const { name, purchases } = item;
-  const pricesPerUnit = [];
-  let maximum = 0, mininum = Number.MAX_SAFE_INTEGER;
+  const [maximum, setMaximum] = useState(0);
+  const [minimum, setMinimum] = useState(0);
+  const [mode, setMode] = useState(0);
+  const navigation = useNavigation();
 
-  for (const purchase of purchases) {
-    const price = purchase.price / purchase.quantity;
-    pricesPerUnit.push(price);
-
-    if(price > maximum){
-      maximum = price;
-    }
-    
-    if (price < mininum){
-      mininum = price;
-    }
-
+  function handleSeeHistory() {
+    navigation.navigate("Product", { item: item });
   }
 
-  pricesPerUnit.sort();
-  let current = {
-    value: pricesPerUnit[0],
-    count: 1
-  };
-  let best = {
-    value: 0,
-    count: 0
-  }
+  useEffect(() => {
+    const pricesPerUnit = createPricePerUnitArray(purchases);
 
-  for(let i = 1; i < pricesPerUnit.length; i++){
-    if(pricesPerUnit[i] != current.value){
-      if (current.value > best.value){
-        best = current;
-      }
-
-      current.value = pricesPerUnit[i];
-      current.count = 1;
-    }
-    else{
-      current.count++;
-    }
-  }
-
-  if (current.value > best.value){
-    best = current;
-  }
-  const mode = best.value;
+    setMode(calculateMode(pricesPerUnit));
+    setMaximum(calculateMax(pricesPerUnit));
+    setMinimum(calculateMin(pricesPerUnit));
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>{name}</Text>
-      <View style={styles.prices}>
-        <View style={styles.priceItem}>
-          <Entypo name="triangle-up" size={24} color="black" />
-          <Text>R$ {maximum.toFixed(2)}</Text>
-        </View>
-        <View style={styles.priceItem}>
-        <Entypo name="thumbs-up" size={24} color="black" />
-          <Text>R$ {mode.toFixed(2)}</Text>
-        </View>
+    <TouchableOpacity onPress={handleSeeHistory}>
+      <View style={styles.container}>
+        <Text>{name}</Text>
+        <View style={styles.prices}>
+          <View style={styles.priceItem}>
+            <Entypo name="triangle-up" size={24} color="black" />
+            <Text>R$ {maximum.toFixed(2)}</Text>
+          </View>
+          <View style={styles.priceItem}>
+            <Entypo name="thumbs-up" size={24} color="black" />
+            <Text>R$ {mode.toFixed(2)}</Text>
+          </View>
 
-        <View style={styles.priceItem}>
-          <Entypo name="triangle-down" size={24} color="black" />
-          <Text>R$ {mininum.toFixed(2)}</Text>
+          <View style={styles.priceItem}>
+            <Entypo name="triangle-down" size={24} color="black" />
+            <Text>R$ {minimum.toFixed(2)}</Text>
+          </View>
         </View>
-        
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
