@@ -97,7 +97,6 @@ export default function Product() {
               <Text>
                 Valor por unidade: R${(elem.price / elem.quantity).toFixed(2)}
               </Text>
-              <Text>Valor pago: R${elem.price.toFixed(2)}</Text>
             </View>
           ))}
         </View>

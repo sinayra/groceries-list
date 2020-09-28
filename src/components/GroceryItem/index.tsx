@@ -34,7 +34,7 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
   const navigation = useNavigation();
 
   function handleSeeHistory() {
-    navigation.navigate("Product", { item: item });
+    navigation.navigate("Detail", { item: item });
   }
 
   useEffect(() => {
