@@ -1,5 +1,5 @@
 interface Purchase {
-  date: Date;
+  date: number;
   price: number;
   quantity: number;
 }

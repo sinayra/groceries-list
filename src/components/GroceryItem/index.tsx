@@ -7,7 +7,7 @@ import styles from "./styles";
 import { calculateMin, calculateMax, calculateMode, createPricePerUnitArray } from "../../utils/purchaseMath"
 
 export interface Purchase {
-  date: Date;
+  date: number;
   price: number;
   quantity: number;
 }
