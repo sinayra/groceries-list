@@ -18,10 +18,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFA",
     flex: 1,
   },
-  form: {
-    flex: 1,
-    backgroundColor: "#AAA",
-  },
   button: {
     backgroundColor: "#34CB79",
     height: 60,
@@ -39,6 +35,30 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto_500Medium",
     fontSize: 16,
   },
+  input: {
+    height: 54,
+    backgroundColor: "#FFF",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  label: {
+    fontFamily: 'Roboto_400Regular',
+    color: '#D4C2FF',
+  },
+  inputGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  inputBlock: {
+    width: '48%',
+  },
+
+  form: {
+    flex: 1,
+  }
 });
 
 export default styles;

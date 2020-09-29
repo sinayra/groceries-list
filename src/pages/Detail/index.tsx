@@ -16,7 +16,7 @@ import {
   calculateMin,
   calculateMode,
 } from "../../utils/purchaseMath";
-import { displayDate } from "../../utils/date"
+import { displayCompleteDate } from "../../utils/date"
 
 export interface Purchase {
   date: number;
@@ -89,7 +89,7 @@ export default function Product() {
         <View style={styles.history}>
           {purchases.map((elem, index) => (
             <View key={index} style={styles.historyItem}>
-              <Text>Data de compra: {displayDate(elem.date)}</Text>
+              <Text>Data de compra: {displayCompleteDate(elem.date)}</Text>
               <Text>
                 Valor por unidade: R${(elem.price / elem.quantity).toFixed(2)}
               </Text>

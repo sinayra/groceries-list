@@ -1,4 +1,4 @@
-export function displayDate(milliseconds: number) {
+export function displayCompleteDate(milliseconds: number) {
   const date = new Date(milliseconds);
 
   const dayOfWeek = [
@@ -25,7 +25,16 @@ export function displayDate(milliseconds: number) {
       "Dezembro",
     ];
 
-    const day = ("0" + date.getDate()).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = monthName[date.getMonth()];
 
-  return `(${dayOfWeek[date.getDay()]}) ${day} de ${monthName[date.getMonth()]} de ${date.getFullYear()}`;
+  return `(${dayOfWeek[date.getDay()]}) ${day} de ${month} de ${date.getFullYear()}`;
+}
+
+export function displayShortDate(milliseconds: number) {
+  const date = new Date(milliseconds);
+  const day = ("0" + date.getDate()).slice(-2);
+  const month = ("0" + date.getMonth()).slice(-2);
+
+  return `${day}/${month}/${date.getFullYear()}`;
 }
