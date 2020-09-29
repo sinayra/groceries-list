@@ -4,13 +4,15 @@ import {
   Text,
   TextInput,
   SafeAreaView,
-  Modal,
+  ScrollView,
   TouchableHighlight,
-  ToastAndroid
+  ToastAndroid,
 } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Event } from "@react-native-community/datetimepicker";
+import data from "../../services/mock";
+
 import styles from "./styles";
 
 import { displayShortDate } from "../../utils/date";
@@ -74,38 +76,33 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <ScrollView style={styles.content}>
         <View style={styles.form}>
-          <View style={styles.inputGroup}>
-            <View style={styles.inputBlock}>
-              <Text style={styles.label}>Nome do produto</Text>
-              <TextInput
-                style={styles.input}
-                value={name}
-                onChangeText={(val) => setName(val)}
-                placeholder="Nome do produto"
-                placeholderTextColor="#C1BCCC"
-              />
-            </View>
+          <Text style={styles.label}>Nome do produto</Text>
+          <TextInput
+            style={styles.input}
+            value={name}
+            onChangeText={(val) => setName(val)}
+            placeholder="Nome do produto"
+            placeholderTextColor="#C1BCCC"
+          />
 
-            <View style={styles.inputBlock}>
-              <Text style={styles.label}>Data da compra</Text>
-              <TextInput
-                style={styles.input}
-                value={displayShortDate(dateInput.getTime())}
-                onTouchStart={() => setShowCalendar(true)}
-                showSoftInputOnFocus={false}
-              />
-              {showCalendar && (
-                <RNDateTimePicker
-                  value={dateInput}
-                  mode="date"
-                  display="default"
-                  onChange={handleDateInput}
-                />
-              )}
-            </View>
-          </View>
+          <Text style={styles.label}>Data da compra</Text>
+          <TextInput
+            style={{ ...styles.input, textAlign: "center" }}
+            value={displayShortDate(dateInput.getTime())}
+            onTouchStart={() => setShowCalendar(true)}
+            showSoftInputOnFocus={false}
+          />
+          {showCalendar && (
+            <RNDateTimePicker
+              value={dateInput}
+              mode="date"
+              display="default"
+              onChange={handleDateInput}
+            />
+          )}
+
           <View style={styles.inputGroup}>
             <View style={styles.inputBlock}>
               <Text style={styles.label}>Valor pago</Text>
@@ -134,8 +131,7 @@ export default function Home() {
         <RectButton style={styles.button} onPress={handleSavePurchase}>
           <Text style={styles.buttonText}>Salvar</Text>
         </RectButton>
-
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -1,3 +1,5 @@
+import { MaxHeap } from "./modeThresholdMaxHeap";
+
 interface Purchase {
   date: number;
   price: number;
@@ -16,15 +18,15 @@ export function createPricePerUnitArray(purchases: Purchase[]) {
 }
 
 export function calculateMode(pricesPerUnit: number[]) {
-
   pricesPerUnit.sort();
+
   let current = {
     value: pricesPerUnit[0],
-    count: 1,
+    n: 1,
   };
   let best = {
     value: 0,
-    count: 0,
+    n: 0,
   };
 
   for (let i = 1; i < pricesPerUnit.length; i++) {
@@ -34,9 +36,9 @@ export function calculateMode(pricesPerUnit: number[]) {
       }
 
       current.value = pricesPerUnit[i];
-      current.count = 1;
+      current.n = 1;
     } else {
-      current.count++;
+      current.n++;
     }
   }
 
@@ -45,6 +47,57 @@ export function calculateMode(pricesPerUnit: number[]) {
   }
 
   return best.value;
+}
+
+export function calculateThresholdMode(
+  pricesPerUnit: number[],
+  threshold: number
+) {
+  const thresholdPrices = new MaxHeap();
+
+  pricesPerUnit.sort();
+
+  let i = 0;
+  while (i < pricesPerUnit.length) {
+    let priceSum = pricesPerUnit[i];
+    let n = 1;
+
+    let j = i + 1;
+    while (j < pricesPerUnit.length) {
+      const porcentIncreseadPrice = 1 - pricesPerUnit[i] / pricesPerUnit[j];
+
+      if (porcentIncreseadPrice <= threshold) {
+        priceSum += pricesPerUnit[j];
+        n++;
+        j++;
+      } else {
+        break;
+      }
+    }
+
+    const elem = priceSum / n;
+    thresholdPrices.insert(elem, n);
+
+    i += n;
+  }
+
+  return thresholdPrices.getMax();
+}
+
+export function calculateMedian(pricesPerUnit: number[]) {
+  let median = 0;
+  const halfIndex = Math.round(pricesPerUnit.length / 2);
+
+  if (halfIndex > 0) {
+    pricesPerUnit.sort();
+    median = pricesPerUnit[halfIndex - 1];
+  } else {
+    if (pricesPerUnit.length === 1) {
+      median = pricesPerUnit[0];
+    }
+  }
+
+  return median;
 }
 
 export function calculateMax(pricesPerUnit: number[]) {
@@ -75,5 +128,5 @@ export function calculateAverage(pricesPerUnit: number[]) {
   const sum = pricesPerUnit.reduce((acc, cur) => acc + cur, 0);
   const len = pricesPerUnit.length;
 
-  return len > 0 ? sum/len : 0;
+  return len > 0 ? sum / len : 0;
 }

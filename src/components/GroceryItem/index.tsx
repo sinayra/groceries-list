@@ -7,7 +7,7 @@ import styles from "./styles";
 import {
   calculateMin,
   calculateMax,
-  calculateMode,
+  calculateMedian,
   createPricePerUnitArray,
 } from "../../utils/purchaseMath";
 
@@ -30,7 +30,7 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
   const { name, purchases } = item;
   const [maximum, setMaximum] = useState(0);
   const [minimum, setMinimum] = useState(0);
-  const [mode, setMode] = useState(0);
+  const [median, setMedian] = useState(0);
   const navigation = useNavigation();
 
   function handleSeeHistory() {
@@ -40,7 +40,7 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
   useEffect(() => {
     const pricesPerUnit = createPricePerUnitArray(purchases);
 
-    setMode(calculateMode(pricesPerUnit));
+    setMedian(calculateMedian(pricesPerUnit));
     setMaximum(calculateMax(pricesPerUnit));
     setMinimum(calculateMin(pricesPerUnit));
   }, []);
@@ -56,7 +56,7 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
           </View>
           <View style={styles.priceItem}>
             <Entypo name="thumbs-up" size={24} color="black" />
-            <Text>R$ {mode.toFixed(2)}</Text>
+            <Text>R$ {median.toFixed(2)}</Text>
           </View>
 
           <View style={styles.priceItem}>

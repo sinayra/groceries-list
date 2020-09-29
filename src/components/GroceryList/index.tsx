@@ -12,7 +12,6 @@ interface GroceryListProps {
 const GroceryList: React.FC<GroceryListProps> = ({ filter }) => {
   return (
     <ScrollView style={styles.container}>
-      <Text>Grocery List</Text>
       {data.map((item, index) => (
         <GroceryItem key={index} item={item} />
       ))}
