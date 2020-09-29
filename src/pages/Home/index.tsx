@@ -1,21 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   SafeAreaView,
   TextInput,
-  Linking,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 
+import { Item } from '../../components/GroceryItem';
+
 import GroceryList from "../../components/GroceryList";
 import styles from "./styles";
 
+import data from "../../services/mock";
+
 export default function Home() {
   const navigation = useNavigation();
-  const [grocery, setGrocery] = useState("");
+  const [filter, setFilter] = useState("");
+  const [productsList, setProductsList] = useState<Item[]>([]);
+  const [filteredList, setFilteredList] = useState<Item[]>([]);
+
+  useEffect(() => {
+    setProductsList(data);
+    setFilteredList(data);
+  }, []);
+
+  useEffect(() => {
+    if (filter) {
+      const filterLower = filter.toLowerCase();
+      const filtered = productsList.filter(p => p.name.toLowerCase().includes(filterLower));
+
+      setFilteredList(filtered);
+    } else {
+      setFilteredList(productsList);
+    }
+  }, [filter])
 
   function handleAddPurchase() {
     navigation.navigate("Grocery");
@@ -26,13 +46,15 @@ export default function Home() {
       <View style={styles.content}>
         <TextInput
           style={styles.input}
-          value={grocery}
-          onChangeText={(grocery) => setGrocery(grocery)}
+          value={filter}
+          onChangeText={(filter) => setFilter(filter)}
           placeholder="Search"
           placeholderTextColor="#C1BCCC"
         />
 
-        <GroceryList filter={grocery} />
+        <GroceryList
+          data={filteredList}
+        />
         <TouchableOpacity
           style={styles.floatingMenuButton}
           onPress={handleAddPurchase}

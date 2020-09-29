@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
-import GroceryItem from "../GroceryItem";
+import GroceryItem, { Item } from "../GroceryItem";
 
 import styles from "./styles";
-import data from "../../services/mock";
 
 interface GroceryListProps {
-  filter: string;
+  data: Item[];
 }
 
-const GroceryList: React.FC<GroceryListProps> = ({ filter }) => {
+const GroceryList: React.FC<GroceryListProps> = ({ data }) => {
   return (
     <ScrollView style={styles.container}>
       {data.map((item, index) => (
