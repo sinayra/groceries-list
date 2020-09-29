@@ -15,7 +15,7 @@ import styles from "./styles";
 
 export default function Home() {
   const navigation = useNavigation();
-  const [grocery, setGrocery] = useState("")
+  const [grocery, setGrocery] = useState("");
 
   function handleAddPurchase() {
     navigation.navigate("Grocery");
@@ -23,24 +23,22 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.item}>
-        <Text>Home page</Text>
+      <View style={styles.content}>
         <TextInput
-            style={styles.input}
-            value={grocery}
-            onChangeText={grocery => setGrocery(grocery)}
-            placeholder='Search'
-            placeholderTextColor='#C1BCCC'
-          />
+          style={styles.input}
+          value={grocery}
+          onChangeText={(grocery) => setGrocery(grocery)}
+          placeholder="Search"
+          placeholderTextColor="#C1BCCC"
+        />
 
         <GroceryList filter={grocery} />
-      </View>
-      <View style={styles.floatingMenuButton}>
-      <TouchableOpacity
-        onPress={handleAddPurchase}
-      >
-        <FontAwesome name="plus-circle" size={50} color="black" />
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.floatingMenuButton}
+          onPress={handleAddPurchase}
+        >
+          <FontAwesome name="plus-circle" size={50} color="black" />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

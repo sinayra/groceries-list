@@ -14,14 +14,13 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     alignContent: "stretch",
   },
-  item: {
+  content: {
     backgroundColor: "#FFA",
     flex: 1,
   },
   floatingMenuButton: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    backgroundColor: "#AAA",
   },
   input: {
     height: 54,
