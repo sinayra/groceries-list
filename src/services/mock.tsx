@@ -114,6 +114,57 @@ const mock = [
                 quantity: 0.1544885177453027139874739039666
             },
         ]
+    },
+    {
+        id: 7,
+        name: "Pão de forma",
+        purchases: [
+            {
+                date: new Date("2020-09-05").getTime(),
+                price: 3.99,
+                quantity: 1
+            },
+            {
+                date: new Date("2020-09-21").getTime(),
+                price: 3.19,
+                quantity: 1
+            },
+            {
+                date: new Date("2020-08-25").getTime(),
+                price: 6.07,
+                quantity: 1
+            },
+            {
+                date: new Date("2020-07-03").getTime(),
+                price: 4.39,
+                quantity: 1
+            },
+            {
+                date: new Date("2020-07-19").getTime(),
+                price: 3.40,
+                quantity: 1
+            },
+            {
+                date: new Date("2020-06-03").getTime(),
+                price: 4.19,
+                quantity: 1
+            },
+            {
+                date: new Date("2020-06-06").getTime(),
+                price: 4.29,
+                quantity: 1
+            },
+            {
+                date: new Date("2020-06-14").getTime(),
+                price: 4.79,
+                quantity: 1
+            },
+            {
+                date: new Date("2020-06-25").getTime(),
+                price: 7.19,
+                quantity: 1
+            },
+        ]
     }
 ]
 
