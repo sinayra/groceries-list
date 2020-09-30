@@ -46,11 +46,9 @@ export default function Home() {
 
     setName("");
     setId(0);
-    setDate(0);
     setPrice(0.0);
     setQuantity(0.0);
 
-    setDateInput(new Date());
     setPriceInput("");
     setQuantityInput("");
   }
@@ -63,6 +61,9 @@ export default function Home() {
         setPrice(num);
         setPriceInput(val);
       }
+    } else {
+      setQuantity(0);
+      setQuantityInput("");
     }
   }
 
@@ -74,6 +75,9 @@ export default function Home() {
         setQuantity(num);
         setQuantityInput(val);
       }
+    } else {
+      setQuantity(0);
+      setQuantityInput("");
     }
   }
 
