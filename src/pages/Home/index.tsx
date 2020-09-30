@@ -18,16 +18,11 @@ import data from "../../services/mock";
 export default function Home() {
   const navigation = useNavigation();
   const [filter, setFilter] = useState("");
-  const [productsList, setProductsList] = useState<Item[]>([]);
-  const [filteredList, setFilteredList] = useState<Item[]>([]);
+  const [productsList] = useState<Item[]>(data);
+  const [filteredList, setFilteredList] = useState<Item[]>(data);
 
   useEffect(() => {
-    setProductsList(data);
-    setFilteredList(data);
-  }, []);
-
-  useEffect(() => {
-    if (filter) {
+    if (filter.length > 0) {
       const filterLower = filter.toLowerCase();
       const filtered = productsList.filter(p => p.name.toLowerCase().includes(filterLower));
 
@@ -48,7 +43,7 @@ export default function Home() {
           style={styles.input}
           value={filter}
           onChangeText={(filter) => setFilter(filter)}
-          placeholder="Search"
+          placeholder="Pesquisar..."
           placeholderTextColor="#C1BCCC"
         />
 
