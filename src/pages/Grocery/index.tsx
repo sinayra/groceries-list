@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,27 +11,41 @@ import {
 import { RectButton } from "react-native-gesture-handler";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Event } from "@react-native-community/datetimepicker";
-import data from "../../services/mock";
+import { AntDesign } from "@expo/vector-icons";
 
+import AutoComplete from "../../components/AutoComplete";
 import styles from "./styles";
-
 import { displayShortDate } from "../../utils/date";
+import { Item } from "../../components/GroceryItem";
 
 export default function Home() {
   const [name, setName] = useState("");
-  const [date, setDate] = useState(0);
+  const [id, setId] = useState(0);
+  const [date, setDate] = useState(new Date().getTime());
   const [dateInput, setDateInput] = useState(new Date());
   const [price, setPrice] = useState(0.0);
   const [priceInput, setPriceInput] = useState("");
-  const [quantityInput, setQuantityInput] = useState("");
   const [quantity, setQuantity] = useState(0.0);
+  const [quantityInput, setQuantityInput] = useState("");
 
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showAutoComplete, setShowAutoComplete] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+
+  useEffect(() => {
+    if (id == 0 && name.length > 0) {
+      setShowNew(true);
+    } else {
+      setShowNew(false);
+    }
+  }, [name, id]);
 
   function handleSavePurchase() {
+    console.log(id, name, date, price, quantity);
     ToastAndroid.show("not implemented", ToastAndroid.SHORT);
 
     setName("");
+    setId(0);
     setDate(0);
     setPrice(0.0);
     setQuantity(0.0);
@@ -74,6 +88,11 @@ export default function Home() {
     }
   }
 
+  function handleAutoCompleteSelected(name: string, id: number) {
+    setName(name);
+    setId(id);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
@@ -85,8 +104,24 @@ export default function Home() {
             onChangeText={(val) => setName(val)}
             placeholder="Nome do produto"
             placeholderTextColor="#C1BCCC"
+            onFocus={() => {
+              setShowAutoComplete(true);
+              setId(0);
+            }}
+            onBlur={() => setShowAutoComplete(false)}
           />
-
+          {showAutoComplete && (
+            <AutoComplete
+              onSelected={handleAutoCompleteSelected}
+              filter={name}
+            />
+          )}
+          {showNew && (
+            <View style={styles.showNew}>
+              <AntDesign name="warning" size={24} color="black" />
+              <Text>Um novo item será criado</Text>
+            </View>
+          )}
           <Text style={styles.label}>Data da compra</Text>
           <TextInput
             style={{ ...styles.input, textAlign: "center" }}

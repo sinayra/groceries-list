@@ -40,8 +40,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     justifyContent: "center",
     paddingHorizontal: 16,
-    marginTop: 4,
-    marginBottom: 16,
+    marginTop: 16,
+    borderColor: '#FFF',
+    borderBottomColor: '#CCC',
+    borderWidth: 2,
   },
   label: {
     fontFamily: 'Roboto_400Regular',
@@ -51,13 +53,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-
   inputBlock: {
     width: '48%',
   },
-
   form: {
     flex: 1,
+  },
+  showNew: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 });
 
