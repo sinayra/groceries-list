@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
-import GroceryItem, { Item } from "../GroceryItem";
-
-import styles from "./styles";
+import { Grocery } from "../../types/Grocery";
+import GroceryItem from "../GroceryItem";
 
 interface GroceryListProps {
-  data: Item[];
+  data: Grocery[];
 }
 
 const GroceryList: React.FC<GroceryListProps> = ({ data }) => {
   return (
-    <ScrollView style={styles.container}>
+    <>
       {data.map((item, index) => (
         <GroceryItem key={index} item={item} />
       ))}
-    </ScrollView>
+    </>
   );
 };
 

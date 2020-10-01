@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Linking, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
 
-import { Entypo } from "@expo/vector-icons";
 import styles from "./styles";
 import {
   calculateMin,
@@ -11,23 +12,17 @@ import {
   createPricePerUnitArray,
 } from "../../utils/purchaseMath";
 
-export interface Purchase {
-  date: number;
-  price: number;
-  quantity: number;
-}
-
-export interface Item {
-  id: number;
-  name: string;
-  purchases: Purchase[];
-}
+import variables from "../../styles/variables";
+import { ExtendedTheme } from "../../types/ExtendedTheme";
+import { Grocery } from "../../types/Grocery";
 
 interface GroceryItemProps {
-  item: Item;
+  item: Grocery;
 }
 
 const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
+  const { colors } = useTheme() as ExtendedTheme;
+
   const { name, purchases } = item;
   const [maximum, setMaximum] = useState(0);
   const [minimum, setMinimum] = useState(0);
@@ -49,20 +44,36 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleSeeHistory}>
-        <Text>{name}</Text>
-        <View style={styles.prices}>
+        <Text style={{ ...styles.title, color: colors.text }}>{name}</Text>
+        <View style={{ ...styles.prices, backgroundColor: colors.card }}>
           <View style={styles.priceItem}>
-            <Entypo name="triangle-up" size={24} color="black" />
-            <Text>R$ {maximum.toFixed(2)}</Text>
-          </View>
-          <View style={styles.priceItem}>
-            <Entypo name="thumbs-up" size={24} color="black" />
-            <Text>R$ {median.toFixed(2)}</Text>
+            <Feather
+              name="trending-down"
+              size={variables.FONT_SIZE_MEDIUM}
+              color={colors.green}
+              style={{ paddingRight: 5 }}
+            />
+            <Text style={{...styles.price, color: colors.text}}>R$ {minimum.toFixed(2)}</Text>
           </View>
 
           <View style={styles.priceItem}>
-            <Entypo name="triangle-down" size={24} color="black" />
-            <Text>R$ {minimum.toFixed(2)}</Text>
+            <Feather
+              name="star"
+              size={variables.FONT_SIZE_LARGE + 5}
+              color={colors.yellow}
+              style={{ paddingRight: 5 }}
+            />
+            <Text style={{...styles.price, color: colors.text}}>R$ {median.toFixed(2)}</Text>
+          </View>
+
+          <View style={styles.priceItem}>
+            <Feather
+              name="trending-up"
+              size={variables.FONT_SIZE_MEDIUM}
+              color={colors.red}
+              style={{ paddingRight: 5 }}
+            />
+            <Text style={{...styles.price, color: colors.text}}>R$ {maximum.toFixed(2)}</Text>
           </View>
         </View>
       </TouchableOpacity>

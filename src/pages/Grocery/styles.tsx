@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
+import variables from "../../styles/variables";
 import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     flexDirection: "column",
     paddingTop: 20 + Constants.statusBarHeight,
     paddingBottom: 20 + Constants.statusBarHeight,
@@ -15,11 +15,10 @@ const styles = StyleSheet.create({
     alignContent: "stretch",
   },
   content: {
-    backgroundColor: "#FFA",
     flex: 1,
+    justifyContent: "space-between",
   },
   button: {
-    backgroundColor: "#34CB79",
     height: 60,
     flexDirection: "row",
     borderRadius: 10,
@@ -31,38 +30,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     textAlign: "center",
-    color: "#FFFFFF",
     fontFamily: "Roboto_500Medium",
-    fontSize: 16,
+    fontSize: variables.FONT_SIZE_LARGE,
   },
   input: {
     height: 54,
-    backgroundColor: "#FFF",
     justifyContent: "center",
     paddingHorizontal: 16,
     marginTop: 16,
-    borderColor: '#FFF',
-    borderBottomColor: '#CCC',
-    borderWidth: 2,
   },
   label: {
-    fontFamily: 'Roboto_400Regular',
-    color: '#D4C2FF',
+    fontFamily: "Roboto_400Regular",
   },
   inputGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   inputBlock: {
-    width: '48%',
+    width: "48%",
   },
-  form: {
-    flex: 1,
-  },
+  form: {},
   showNew: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  }
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: variables.FONT_SIZE_LARGE + 10,
+    fontFamily: "Ubuntu_700Bold",
+  },
 });
 
 export default styles;

@@ -4,21 +4,23 @@ import {
   Text,
   TextInput,
   SafeAreaView,
-  ScrollView,
-  TouchableHighlight,
   ToastAndroid,
 } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Event } from "@react-native-community/datetimepicker";
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 import AutoComplete from "../../components/AutoComplete";
 import styles from "./styles";
 import { displayShortDate } from "../../utils/date";
-import { Item } from "../../components/GroceryItem";
+import variables from "../../styles/variables";
+import { useTheme } from '@react-navigation/native';
+import { ExtendedTheme } from "../../types/ExtendedTheme";
 
-export default function Home() {
+export default function Grocery() {
+  const { colors } = useTheme() as ExtendedTheme;
+
   const [name, setName] = useState("");
   const [id, setId] = useState(0);
   const [date, setDate] = useState(new Date().getTime());
@@ -99,15 +101,16 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.content}>
+      <View style={styles.content}>
         <View style={styles.form}>
-          <Text style={styles.label}>Nome do produto</Text>
+          <Text style={{...styles.title, color: colors.text}}>Adicionar compra</Text>
+          <Text style={{...styles.label, color: colors.text}}>Nome do produto</Text>
           <TextInput
-            style={styles.input}
+            style={{...styles.input, backgroundColor: colors.card, color: colors.text}}
             value={name}
             onChangeText={(val) => setName(val)}
             placeholder="Nome do produto"
-            placeholderTextColor="#C1BCCC"
+            placeholderTextColor={colors.border}
             onFocus={() => {
               setShowAutoComplete(true);
               setId(0);
@@ -122,13 +125,13 @@ export default function Home() {
           )}
           {showNew && (
             <View style={styles.showNew}>
-              <AntDesign name="warning" size={24} color="black" />
-              <Text>Um novo item será criado</Text>
+              <MaterialCommunityIcons name="checkbox-blank-circle" size={variables.FONT_SIZE_MEDIUM} color={colors.green} style={{padding: 10}} />
+              <Text style={{color: colors.text}}>Um novo item será criado</Text>
             </View>
           )}
-          <Text style={styles.label}>Data da compra</Text>
+          <Text style={{...styles.label, color: colors.text}}>Data da compra</Text>
           <TextInput
-            style={{ ...styles.input, textAlign: "center" }}
+            style={{ ...styles.input, backgroundColor: colors.card, color: colors.text, textAlign: "center" }}
             value={displayShortDate(dateInput.getTime())}
             onTouchStart={() => setShowCalendar(true)}
             showSoftInputOnFocus={false}
@@ -144,33 +147,33 @@ export default function Home() {
 
           <View style={styles.inputGroup}>
             <View style={styles.inputBlock}>
-              <Text style={styles.label}>Valor pago</Text>
+              <Text style={{...styles.label, color: colors.text}}>Valor pago</Text>
               <TextInput
-                style={styles.input}
+                style={{...styles.input, backgroundColor: colors.card, color: colors.text}}
                 value={priceInput}
                 onChangeText={handlePriceInput}
                 placeholder="Valor do produto"
                 keyboardType="decimal-pad"
-                placeholderTextColor="#C1BCCC"
+                placeholderTextColor={colors.border}
               />
             </View>
             <View style={styles.inputBlock}>
-              <Text style={styles.label}>Quantidade</Text>
+              <Text style={{...styles.label, color: colors.text}}>Quantidade</Text>
               <TextInput
-                style={styles.input}
+                style={{...styles.input, backgroundColor: colors.card, color: colors.text}}
                 value={quantityInput}
                 onChangeText={handleQuantityInput}
                 placeholder="Quantidade"
                 keyboardType="decimal-pad"
-                placeholderTextColor="#C1BCCC"
+                placeholderTextColor={colors.border}
               />
             </View>
           </View>
         </View>
-        <RectButton style={styles.button} onPress={handleSavePurchase}>
-          <Text style={styles.buttonText}>Salvar</Text>
+        <RectButton style={{...styles.button, backgroundColor: colors.primary}} onPress={handleSavePurchase}>
+          <Text style={{...styles.buttonText, color: '#000'}}>Salvar</Text>
         </RectButton>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }

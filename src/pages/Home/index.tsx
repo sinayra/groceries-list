@@ -7,19 +7,22 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
-
-import { Item } from '../../components/GroceryItem';
+import { useTheme } from '@react-navigation/native';
 
 import GroceryList from "../../components/GroceryList";
 import styles from "./styles";
 
 import data from "../../services/mock";
+import { Grocery } from "../../types/Grocery";
+import { ScrollView } from "react-native-gesture-handler";
+import variables from "../../styles/variables";
 
 export default function Home() {
+  const { colors } = useTheme();
   const navigation = useNavigation();
   const [filter, setFilter] = useState("");
-  const [productsList] = useState<Item[]>(data);
-  const [filteredList, setFilteredList] = useState<Item[]>(data);
+  const [productsList] = useState<Grocery[]>(data);
+  const [filteredList, setFilteredList] = useState<Grocery[]>(data);
 
   useEffect(() => {
     if (filter.length > 0) {
@@ -38,25 +41,25 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <ScrollView style={{...styles.content, backgroundColor: colors.background}}>
         <TextInput
-          style={styles.input}
+          style={{...styles.input, backgroundColor: colors.card, color: colors.text}}
           value={filter}
           onChangeText={(filter) => setFilter(filter)}
           placeholder="Pesquisar..."
-          placeholderTextColor="#C1BCCC"
+          placeholderTextColor={colors.border}
         />
 
         <GroceryList
           data={filteredList}
         />
-        <TouchableOpacity
-          style={styles.floatingMenuButton}
+      </ScrollView>
+      <TouchableOpacity
+          style={{...styles.floatingMenuButton, backgroundColor: "transparent"}}
           onPress={handleAddPurchase}
         >
-          <FontAwesome name="plus-circle" size={50} color="black" />
+          <FontAwesome name="plus-circle" size={variables.FONT_SIZE_LARGE + 30} color={colors.primary}/>
         </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }

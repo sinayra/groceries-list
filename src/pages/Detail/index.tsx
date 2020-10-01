@@ -4,9 +4,11 @@ import {
   Text,
   SafeAreaView,
   ScrollView,
+  ToastAndroid,
+  Alert,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { RectButton } from "react-native-gesture-handler";
+import { useRoute } from "@react-navigation/native";
+import { RectButton, TouchableOpacity } from "react-native-gesture-handler";
 import styles from "./styles";
 import {
   createPricePerUnitArray,
@@ -16,28 +18,23 @@ import {
   calculateThresholdMode,
   calculateMedian,
 } from "../../utils/purchaseMath";
-import { displayCompleteDate } from "../../utils/date"
-
-export interface Purchase {
-  date: number;
-  price: number;
-  quantity: number;
-}
-
-export interface Item {
-  name: string;
-  purchases: Purchase[];
-}
+import { displayCompleteDate, displayShortDate } from "../../utils/date";
+import { useTheme } from "@react-navigation/native";
+import { Grocery } from "../../types/Grocery";
+import { ExtendedTheme } from "../../types/ExtendedTheme";
+import { Feather } from "@expo/vector-icons";
+import variables from "../../styles/variables";
 
 interface RouteParams {
-  item: Item;
+  item: Grocery;
 }
 
-export default function Product() {
-  const navigation = useNavigation();
+export default function Detail() {
+  const { colors } = useTheme() as ExtendedTheme;
+
   const route = useRoute();
   const routeParams = route.params as RouteParams;
-  const { name, purchases } = routeParams.item;
+  const { id, name, purchases } = routeParams.item;
   const [maximum, setMaximum] = useState(0);
   const [minimum, setMinimum] = useState(0);
   const [mode, setMode] = useState(0);
@@ -63,43 +60,140 @@ export default function Product() {
     });
   }, []);
 
+  function handleDeleteGrocery() {
+    console.log(id);
+    ToastAndroid.show("not implemented", ToastAndroid.SHORT);
+  }
+
+  function handleDeleteHistory(index: number) {
+    console.log(purchases[index]);
+    ToastAndroid.show("not implemented", ToastAndroid.SHORT);
+  }
+
+  function createAlert(message: string, purchaseArrayIndex: number) {
+    Alert.alert(
+      "Excluir entrada",
+      message,
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Ok",
+          onPress: () =>
+            purchaseArrayIndex >= 0
+              ? handleDeleteHistory(purchaseArrayIndex)
+              : handleDeleteGrocery(),
+        },
+      ],
+      { cancelable: true }
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.content}>
-        <Text>{name}</Text>
-
-        <View style={styles.prices}>
-          <View style={styles.prices}>
-            <View style={styles.priceItem}>
-              <Text>Max: R${maximum.toFixed(2)}</Text>
-            </View>
-
-            <View style={styles.priceItem}>
-              <Text>Min: R$ {minimum.toFixed(2)}</Text>
-            </View>
-
-            <View style={styles.priceItem}>
-              <Text>Preço mediano: R${median.toFixed(2)}</Text>
-            </View>
-
-            <View style={styles.priceItem}>
-              <Text>Preço estimado: R${mode.toFixed(2)}</Text>
-            </View>
-            
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ ...styles.title, color: colors.text }}>{name}</Text>
           </View>
-        </View>
-        <View style={styles.history}>
-          {purchases.map((elem, index) => (
-            <View key={index} style={styles.historyItem}>
-              <Text>Data de compra: {displayCompleteDate(elem.date)}</Text>
-              <Text>
-                Valor por unidade: R${(elem.price / elem.quantity).toFixed(2)}
+          <View style={styles.prices}>
+            <View
+              style={{
+                ...styles.priceItem,
+                backgroundColor: colors.secondaryCard,
+              }}
+            >
+              <Text style={{ ...styles.priceText, color: colors.text }}>
+                Max: R${maximum.toFixed(2)}
               </Text>
             </View>
-          ))}
-        </View>
-      </ScrollView>
 
+            <View
+              style={{
+                ...styles.priceItem,
+                backgroundColor: colors.secondaryCard,
+              }}
+            >
+              <Text style={{ ...styles.priceText, color: colors.text }}>
+                Min: R$ {minimum.toFixed(2)}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                ...styles.priceItem,
+                backgroundColor: colors.secondaryCard,
+              }}
+            >
+              <Text style={{ ...styles.priceText, color: colors.text }}>
+                Preço mediano: R${median.toFixed(2)}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                ...styles.priceItem,
+                backgroundColor: colors.secondaryCard,
+              }}
+            >
+              <Text style={{ ...styles.priceText, color: colors.text }}>
+                Preço estimado: R${mode.toFixed(2)}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <ScrollView style={styles.history}>
+          <Text style={{ ...styles.subtitle, color: colors.text }}>
+            Histórico de compras
+          </Text>
+          {purchases.map((elem, index) => (
+            <View
+              key={index}
+              style={{ ...styles.historyItem, backgroundColor: colors.card }}
+            >
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: colors.text }}>
+                  {displayCompleteDate(elem.date)}
+                </Text>
+                <Text style={{ color: colors.text }}>
+                  Valor por unidade: R${(elem.price / elem.quantity).toFixed(2)}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() =>
+                  createAlert(
+                    `Atenção, você está prestes a excluir a ${name} de ${displayShortDate(
+                      elem.date
+                    )}. Essa ação é irreversível. Deseja continuar?`,
+                    index
+                  )
+                }
+              >
+                <Feather
+                  name="trash-2"
+                  size={variables.FONT_SIZE_LARGE + 10}
+                  color={colors.yellow}
+                />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+      <RectButton
+        style={{ ...styles.button, backgroundColor: colors.notification }}
+        onPress={() =>
+          createAlert(
+            `Atenção, você está prestes a excluir o produto ${name}. Essa ação é irreversível. Deseja continuar?`,
+            -1
+          )
+        }
+      >
+        <Text style={{ ...styles.buttonText, color: colors.text }}>
+          Excluir
+        </Text>
+      </RectButton>
     </SafeAreaView>
   );
 }

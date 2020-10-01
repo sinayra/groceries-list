@@ -4,7 +4,6 @@ import Constants from "expo-constants";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     flexDirection: "column",
     paddingTop: 20 + Constants.statusBarHeight,
     paddingBottom: 20 + Constants.statusBarHeight,
@@ -15,16 +14,16 @@ const styles = StyleSheet.create({
     alignContent: "stretch",
   },
   content: {
-    backgroundColor: "#FFA",
     flex: 1,
   },
   floatingMenuButton: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    position: "absolute",
+    right: 20,
+    bottom: 30,
   },
   input: {
     height: 54,
-    backgroundColor: "#FFF",
+    color: "white",
     justifyContent: "center",
     paddingHorizontal: 16,
     marginTop: 4,
