@@ -1,10 +1,5 @@
+import { Purchase } from "../types/Grocery";
 import { MaxHeap } from "./modeThresholdMaxHeap";
-
-interface Purchase {
-  date: number;
-  price: number;
-  quantity: number;
-}
 
 export function createPricePerUnitArray(purchases: Purchase[]) {
   const pricesPerUnit = [];
