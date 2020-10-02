@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { RectButton, TouchableOpacity } from "react-native-gesture-handler";
+import { RectButton } from "react-native-gesture-handler";
 import styles from "./styles";
 import {
   createPricePerUnitArray,
@@ -18,12 +18,11 @@ import {
   calculateThresholdMode,
   calculateMedian,
 } from "../../utils/purchaseMath";
-import { displayCompleteDate, displayShortDate } from "../../utils/date";
+
 import { useTheme } from "@react-navigation/native";
 import { Grocery } from "../../types/Grocery";
 import { ExtendedTheme } from "../../types/ExtendedTheme";
-import { Feather } from "@expo/vector-icons";
-import variables from "../../styles/variables";
+import PurchaseList from "../../components/PurchaseList";
 
 interface RouteParams {
   item: Grocery;
@@ -144,42 +143,7 @@ export default function Detail() {
             </View>
           </View>
         </View>
-        <ScrollView style={styles.history}>
-          <Text style={{ ...styles.subtitle, color: colors.text }}>
-            Histórico de compras
-          </Text>
-          {purchases.map((elem, index) => (
-            <View
-              key={index}
-              style={{ ...styles.historyItem, backgroundColor: colors.card }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: colors.text }}>
-                  {displayCompleteDate(elem.date)}
-                </Text>
-                <Text style={{ color: colors.text }}>
-                  Valor por unidade: R${(elem.price / elem.quantity).toFixed(2)}
-                </Text>
-              </View>
-              <TouchableOpacity
-                onPress={() =>
-                  createAlert(
-                    `Atenção, você está prestes a excluir a ${name} de ${displayShortDate(
-                      elem.date
-                    )}. Essa ação é irreversível. Deseja continuar?`,
-                    index
-                  )
-                }
-              >
-                <Feather
-                  name="trash-2"
-                  size={variables.FONT_SIZE_LARGE + 10}
-                  color={colors.yellow}
-                />
-              </TouchableOpacity>
-            </View>
-          ))}
-        </ScrollView>
+        <PurchaseList createAlert={createAlert} purchases={purchases} />
       </View>
       <RectButton
         style={{ ...styles.button, backgroundColor: colors.notification }}

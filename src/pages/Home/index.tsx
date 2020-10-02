@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{...styles.content, backgroundColor: colors.background}}>
+      <View style={{...styles.content, backgroundColor: colors.background}}>
         <TextInput
           style={{...styles.input, backgroundColor: colors.card, color: colors.text}}
           value={filter}
@@ -53,7 +53,7 @@ export default function Home() {
         <GroceryList
           data={filteredList}
         />
-      </ScrollView>
+      </View>
       <TouchableOpacity
           style={{...styles.floatingMenuButton, backgroundColor: "transparent"}}
           onPress={handleAddPurchase}

@@ -16,11 +16,7 @@ import variables from "../../styles/variables";
 import { ExtendedTheme } from "../../types/ExtendedTheme";
 import { Grocery } from "../../types/Grocery";
 
-interface GroceryItemProps {
-  item: Grocery;
-}
-
-const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
+const GroceryItem = ({item}:{item:Grocery}) => {
   const { colors } = useTheme() as ExtendedTheme;
 
   const { name, purchases } = item;

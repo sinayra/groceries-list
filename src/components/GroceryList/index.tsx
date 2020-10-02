@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { FlatList } from "react-native";
 import { Grocery } from "../../types/Grocery";
 import GroceryItem from "../GroceryItem";
 
@@ -8,11 +9,11 @@ interface GroceryListProps {
 
 const GroceryList: React.FC<GroceryListProps> = ({ data }) => {
   return (
-    <>
-      {data.map((item, index) => (
-        <GroceryItem key={index} item={item} />
-      ))}
-    </>
+      <FlatList
+        data={data}
+        renderItem={({item}: {item:Grocery}) => <GroceryItem item={item} />}
+        keyExtractor={(item, index) => item.id.toString()}
+      />
   );
 };
 
