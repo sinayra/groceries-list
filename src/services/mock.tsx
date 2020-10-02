@@ -1,6 +1,6 @@
 const mock = [
     {
-        id: 1,
+        id: "1",
         name: "Coca 1L",
         purchases: [
             {
@@ -26,7 +26,7 @@ const mock = [
         ]
     },
     {
-        id: 2,
+        id: "2",
         name: "Coca Zero 1.5L",
         purchases: [
             {
@@ -42,7 +42,7 @@ const mock = [
         ]
     },
     {
-        id: 3,
+        id: "3",
         name: "Chá",
         purchases: [
             {
@@ -58,7 +58,7 @@ const mock = [
         ]
     },
     {
-        id: 4,
+        id: "4",
         name: "Sabonete",
         purchases: [
             {
@@ -69,7 +69,7 @@ const mock = [
         ]
     },
     {
-        id: 5,
+        id: "5",
         name: "Batata",
         purchases: [
             {
@@ -95,7 +95,7 @@ const mock = [
         ]
     },
     {
-        id: 6,
+        id: "6",
         name: "Cenoura",
         purchases: [
             {
@@ -116,7 +116,7 @@ const mock = [
         ]
     },
     {
-        id: 7,
+        id: "7",
         name: "Pão de forma",
         purchases: [
             {

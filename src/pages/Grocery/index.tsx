@@ -20,7 +20,7 @@ export default function Grocery() {
   const variables = Variables();
 
   const [name, setName] = useState("");
-  const [id, setId] = useState(0);
+  const [id, setId] = useState("");
   const [date, setDate] = useState(new Date().getTime());
   const [dateInput, setDateInput] = useState(new Date());
   const [price, setPrice] = useState(0.0);
@@ -33,7 +33,7 @@ export default function Grocery() {
   const [showNew, setShowNew] = useState(false);
 
   useEffect(() => {
-    if (id == 0 && name.length > 0) {
+    if (id.length === 0 && name.length > 0) {
       setShowNew(true);
     } else {
       setShowNew(false);
@@ -45,7 +45,7 @@ export default function Grocery() {
     ToastAndroid.show("not implemented", ToastAndroid.SHORT);
 
     setName("");
-    setId(0);
+    setId("");
     setPrice(0.0);
     setQuantity(0.0);
 
@@ -92,7 +92,7 @@ export default function Grocery() {
     }
   }
 
-  function handleAutoCompleteSelected(name: string, id: number) {
+  function handleAutoCompleteSelected(name: string, id: string) {
     setName(name);
     setId(id);
   }
@@ -131,7 +131,7 @@ export default function Grocery() {
             placeholderTextColor={variables.BORDER_COLOR}
             onFocus={() => {
               setShowAutoComplete(true);
-              setId(0);
+              setId("");
             }}
             onBlur={() => setShowAutoComplete(false)}
           />

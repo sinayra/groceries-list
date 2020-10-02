@@ -5,7 +5,7 @@ export interface Purchase {
 }
 
 export interface Grocery {
-  id: number;
+  id: string;
   name: string;
   purchases: Purchase[];
 }

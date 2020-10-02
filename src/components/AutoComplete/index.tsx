@@ -8,7 +8,7 @@ import { Grocery } from "../../types/Grocery";
 import { Variables } from "../../styles/variables";
 
 interface AutoCompleteProps {
-  onSelected: (name: string, id: number) => void;
+  onSelected: (name: string, id: string) => void;
   filter: string;
 }
 
@@ -32,7 +32,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelected, filter }) => {
 
   useEffect(() => {
     if (filteredList.length === 0) {
-      onSelected(filter, 0);
+      onSelected(filter, "");
     }
   }, [filteredList]);
 

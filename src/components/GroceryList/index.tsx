@@ -12,7 +12,7 @@ const GroceryList: React.FC<GroceryListProps> = ({ data }) => {
       <FlatList
         data={data}
         renderItem={({item}: {item:Grocery}) => <GroceryItem item={item} />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
       />
   );
 };
