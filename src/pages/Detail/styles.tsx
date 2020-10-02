@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import variables from "../../styles/variables";
+
 
 const styles = StyleSheet.create({
   container: {
@@ -46,16 +46,10 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto_400Regular"
   },
   title: {
-    fontSize: variables.FONT_SIZE_LARGE + 10,
     fontFamily: "Ubuntu_700Bold",
     flex: 1,
   },
-  subtitle: {
-    fontSize: variables.FONT_SIZE_LARGE + 3,
-    paddingVertical: 5,
-    paddingTop: 10,
-    fontFamily: "Ubuntu_700Bold",
-  },
+  
   header: {
     minHeight: 100,
   },
@@ -72,7 +66,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     fontFamily: "Roboto_500Medium",
-    fontSize: variables.FONT_SIZE_LARGE,
   },
 });
 

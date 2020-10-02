@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import variables from "../../styles/variables"
 
 const styles = StyleSheet.create({
   container: {
@@ -24,7 +23,6 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto_500Medium"
   },
   title: {
-    fontSize: variables.FONT_SIZE_LARGE,
     fontFamily: "Ubuntu_700Bold"
   }
 });

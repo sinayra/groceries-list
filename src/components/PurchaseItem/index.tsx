@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import styles from "./styles";
 import { displayCompleteDate, displayShortDate } from "../../utils/date";
 
-import variables from "../../styles/variables";
-import { ExtendedTheme } from "../../types/ExtendedTheme";
+import { Variables } from "../../styles/variables";
 import { Purchase } from "../../types/Grocery";
 
 interface PurchaseItemPropsProps {
@@ -21,19 +19,21 @@ const PurchaseItem: React.FC<PurchaseItemPropsProps> = ({
   index,
   createAlert,
 }) => {
-  const { colors } = useTheme() as ExtendedTheme;
+  const variables = Variables();
 
   return (
-    <View style={{ ...styles.historyItem, backgroundColor: colors.card }}>
+    <View
+      style={{ ...styles.historyItem, backgroundColor: variables.CARD_COLOR }}
+    >
       <View style={{ flex: 1 }}>
-        <Text style={{ color: colors.text }}>
+        <Text style={{ color: variables.TEXT_COLOR }}>
           {displayCompleteDate(item.date)}
         </Text>
-        <Text style={{ color: colors.text }}>
+        <Text style={{ color: variables.TEXT_COLOR }}>
           Valor por unidade: R${(item.price / item.quantity).toFixed(2)}
         </Text>
-        <Text style={{ color: colors.text }}>
-          Valor pago: R${(item.price).toFixed(2)}
+        <Text style={{ color: variables.TEXT_COLOR }}>
+          Valor pago: R${item.price.toFixed(2)}
         </Text>
       </View>
       <TouchableOpacity
@@ -49,7 +49,7 @@ const PurchaseItem: React.FC<PurchaseItemPropsProps> = ({
         <Feather
           name="trash-2"
           size={variables.FONT_SIZE_LARGE + 10}
-          color={colors.yellow}
+          color={variables.YELLOW_COLOR}
         />
       </TouchableOpacity>
     </View>

@@ -1,36 +1,26 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  ToastAndroid,
-  Alert,
-} from "react-native";
+import { View, Text, SafeAreaView, ToastAndroid, Alert } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 import styles from "./styles";
 import {
   createPricePerUnitArray,
-  calculateAverage,
   calculateMax,
   calculateMin,
   calculateThresholdMode,
   calculateMedian,
 } from "../../utils/purchaseMath";
 
-import { useTheme } from "@react-navigation/native";
 import { Grocery } from "../../types/Grocery";
-import { ExtendedTheme } from "../../types/ExtendedTheme";
 import PurchaseList from "../../components/PurchaseList";
+import { Variables } from "../../styles/variables";
 
 interface RouteParams {
   item: Grocery;
 }
 
 export default function Detail() {
-  const { colors } = useTheme() as ExtendedTheme;
-
+  const variables = Variables();
   const route = useRoute();
   const routeParams = route.params as RouteParams;
   const { id, name, purchases } = routeParams.item;
@@ -38,12 +28,10 @@ export default function Detail() {
   const [minimum, setMinimum] = useState(0);
   const [mode, setMode] = useState(0);
   const [median, setMedian] = useState(0);
-  const [average, setAverage] = useState(0);
 
   useEffect(() => {
     const pricesPerUnit = createPricePerUnitArray(purchases);
 
-    setAverage(calculateAverage(pricesPerUnit));
     setMode(calculateThresholdMode(pricesPerUnit, 0.1));
     setMaximum(calculateMax(pricesPerUnit));
     setMinimum(calculateMin(pricesPerUnit));
@@ -95,16 +83,26 @@ export default function Detail() {
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={{ flex: 1 }}>
-            <Text style={{ ...styles.title, color: colors.text }}>{name}</Text>
+            <Text
+              style={{
+                ...styles.title,
+                color: variables.TEXT_COLOR,
+                fontSize: variables.FONT_SIZE_LARGE + 10,
+              }}
+            >
+              {name}
+            </Text>
           </View>
           <View style={styles.prices}>
             <View
               style={{
                 ...styles.priceItem,
-                backgroundColor: colors.secondaryCard,
+                backgroundColor: variables.SECONDARY_CARD_COLOR,
               }}
             >
-              <Text style={{ ...styles.priceText, color: colors.text }}>
+              <Text
+                style={{ ...styles.priceText, color: variables.TEXT_COLOR }}
+              >
                 Max: R${maximum.toFixed(2)}
               </Text>
             </View>
@@ -112,10 +110,12 @@ export default function Detail() {
             <View
               style={{
                 ...styles.priceItem,
-                backgroundColor: colors.secondaryCard,
+                backgroundColor: variables.SECONDARY_CARD_COLOR,
               }}
             >
-              <Text style={{ ...styles.priceText, color: colors.text }}>
+              <Text
+                style={{ ...styles.priceText, color: variables.TEXT_COLOR }}
+              >
                 Min: R$ {minimum.toFixed(2)}
               </Text>
             </View>
@@ -123,10 +123,12 @@ export default function Detail() {
             <View
               style={{
                 ...styles.priceItem,
-                backgroundColor: colors.secondaryCard,
+                backgroundColor: variables.SECONDARY_CARD_COLOR,
               }}
             >
-              <Text style={{ ...styles.priceText, color: colors.text }}>
+              <Text
+                style={{ ...styles.priceText, color: variables.TEXT_COLOR }}
+              >
                 Preço mediano: R${median.toFixed(2)}
               </Text>
             </View>
@@ -134,10 +136,12 @@ export default function Detail() {
             <View
               style={{
                 ...styles.priceItem,
-                backgroundColor: colors.secondaryCard,
+                backgroundColor: variables.SECONDARY_CARD_COLOR,
               }}
             >
-              <Text style={{ ...styles.priceText, color: colors.text }}>
+              <Text
+                style={{ ...styles.priceText, color: variables.TEXT_COLOR }}
+              >
                 Preço estimado: R${mode.toFixed(2)}
               </Text>
             </View>
@@ -146,7 +150,10 @@ export default function Detail() {
         <PurchaseList createAlert={createAlert} purchases={purchases} />
       </View>
       <RectButton
-        style={{ ...styles.button, backgroundColor: colors.notification }}
+        style={{
+          ...styles.button,
+          backgroundColor: variables.NOTIFICATION_COLOR,
+        }}
         onPress={() =>
           createAlert(
             `Atenção, você está prestes a excluir o produto ${name}. Essa ação é irreversível. Deseja continuar?`,
@@ -154,7 +161,13 @@ export default function Detail() {
           )
         }
       >
-        <Text style={{ ...styles.buttonText, color: colors.text }}>
+        <Text
+          style={{
+            ...styles.buttonText,
+            color: "#000",
+            fontSize: variables.FONT_SIZE_LARGE,
+          }}
+        >
           Excluir
         </Text>
       </RectButton>

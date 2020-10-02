@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import variables from "../../styles/variables"
 
 const styles = StyleSheet.create({
   item: {
@@ -7,7 +6,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
   },
   name: {
-    fontSize: variables.FONT_SIZE_SMALL,
     fontFamily: 'Roboto_400Regular',
   },
 });

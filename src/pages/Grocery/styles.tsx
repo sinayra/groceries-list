@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import variables from "../../styles/variables";
 import Constants from "expo-constants";
 
 const styles = StyleSheet.create({
@@ -31,13 +30,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     fontFamily: "Roboto_500Medium",
-    fontSize: variables.FONT_SIZE_LARGE,
   },
   input: {
     height: 54,
     justifyContent: "center",
     paddingHorizontal: 16,
-    marginTop: 16,
+    marginBottom: 16,
   },
   label: {
     fontFamily: "Roboto_400Regular",
@@ -55,7 +53,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: variables.FONT_SIZE_LARGE + 10,
     fontFamily: "Ubuntu_700Bold",
   },
 });

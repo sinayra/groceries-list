@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
-import { useTheme } from "@react-navigation/native";
 
 import styles from "./styles";
 import data from "../../services/mock";
 import { Grocery } from "../../types/Grocery";
-import { ExtendedTheme } from "../../types/ExtendedTheme";
+import { Variables } from "../../styles/variables";
 
 interface AutoCompleteProps {
   onSelected: (name: string, id: number) => void;
@@ -14,7 +13,7 @@ interface AutoCompleteProps {
 }
 
 const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelected, filter }) => {
-  const { colors } = useTheme() as ExtendedTheme;
+  const variables = Variables();
   const [productsList] = useState<Grocery[]>(data);
   const [filteredList, setFilteredList] = useState<Grocery[]>(data);
 
@@ -26,7 +25,6 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelected, filter }) => {
       );
 
       setFilteredList(filtered);
-      
     } else {
       setFilteredList(productsList);
     }
@@ -36,7 +34,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelected, filter }) => {
     if (filteredList.length === 0) {
       onSelected(filter, 0);
     }
-  },[filteredList])
+  }, [filteredList]);
 
   return (
     <>
@@ -47,8 +45,22 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelected, filter }) => {
             onSelected(item.name, item.id);
           }}
         >
-          <View style={{...styles.item, backgroundColor: colors.card, borderColor: colors.border}}>
-            <Text style={{...styles.name, color: colors.primary}}>{item.name}</Text>
+          <View
+            style={{
+              ...styles.item,
+              backgroundColor: variables.CARD_COLOR,
+              borderColor: variables.BORDER_COLOR,
+            }}
+          >
+            <Text
+              style={{
+                ...styles.name,
+                color: variables.TEXT_COLOR,
+                fontSize: variables.FONT_SIZE_SMALL,
+              }}
+            >
+              {item.name}
+            </Text>
           </View>
         </TouchableHighlight>
       ))}
