@@ -22,6 +22,10 @@
       },
       "web": {
         "favicon": "./assets/favicon.png"
+      },
+      "android": {
+        "package": "com.my.grocerylist",
+        "googleServicesFile": "./google-services.json"
       }
     }
 }
