@@ -3,19 +3,33 @@ import { View, Text } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
 
 import styles from "./styles";
-import data from "../../services/mock";
+import { getGroceries } from "../../services/database";
 import { Grocery } from "../../types/Grocery";
 import { Variables } from "../../styles/variables";
 
 interface AutoCompleteProps {
-  onSelected: (name: string, id: string) => void;
+  onSelected: (name: string, id: string|undefined) => void;
   filter: string;
 }
 
 const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelected, filter }) => {
   const variables = Variables();
-  const [productsList] = useState<Grocery[]>(data);
-  const [filteredList, setFilteredList] = useState<Grocery[]>(data);
+  const [productsList, setProductsList] = useState<Grocery[]>([]);
+  const [filteredList, setFilteredList] = useState<Grocery[]>([]);
+
+  useEffect(() => {
+    async function readDataFromDatabase() {
+      const result = await getGroceries();
+      console.log(result);
+
+      if(result){
+        setProductsList(result);
+        setFilteredList(result);
+      }
+    }
+
+    readDataFromDatabase();
+  }, []);
 
   useEffect(() => {
     if (filter.length > 0) {
@@ -32,7 +46,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelected, filter }) => {
 
   useEffect(() => {
     if (filteredList.length === 0) {
-      onSelected(filter, "");
+      onSelected(filter, undefined);
     }
   }, [filteredList]);
 

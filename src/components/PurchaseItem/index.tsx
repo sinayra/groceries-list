@@ -9,14 +9,14 @@ import { Variables } from "../../styles/variables";
 import { Purchase } from "../../types/Grocery";
 
 interface PurchaseItemPropsProps {
-  createAlert: (message: string, index: number) => void;
+  createAlert: (message: string, idPurchase: string|undefined) => void;
   item: Purchase;
-  index: number;
+  idPurchase: string|undefined;
 }
 
 const PurchaseItem: React.FC<PurchaseItemPropsProps> = ({
   item,
-  index,
+  idPurchase,
   createAlert,
 }) => {
   const variables = Variables();
@@ -42,7 +42,7 @@ const PurchaseItem: React.FC<PurchaseItemPropsProps> = ({
             `Atenção, você está prestes a excluir a compra de ${displayShortDate(
               item.date
             )}. Essa ação é irreversível. Deseja continuar?`,
-            index
+            idPurchase
           )
         }
       >

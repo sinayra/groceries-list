@@ -15,12 +15,13 @@ import AutoComplete from "../../components/AutoComplete";
 import styles from "./styles";
 import { displayShortDate } from "../../utils/date";
 import { Variables } from "../../styles/variables";
+import { setGroceries } from "../../services/database";
 
 export default function Grocery() {
   const variables = Variables();
 
   const [name, setName] = useState("");
-  const [id, setId] = useState("");
+  const [id, setId] = useState<string | undefined>();
   const [date, setDate] = useState(new Date().getTime());
   const [dateInput, setDateInput] = useState(new Date());
   const [price, setPrice] = useState(0.0);
@@ -33,19 +34,28 @@ export default function Grocery() {
   const [showNew, setShowNew] = useState(false);
 
   useEffect(() => {
-    if (id.length === 0 && name.length > 0) {
+    if (id === undefined && name.length > 0) {
       setShowNew(true);
     } else {
       setShowNew(false);
     }
   }, [name, id]);
 
-  function handleSavePurchase() {
+  async function handleSavePurchase() {
     console.log(id, name, date, price, quantity);
-    ToastAndroid.show("not implemented", ToastAndroid.SHORT);
+    const result = await setGroceries(id, name, date, price, quantity);
+
+    if (result === 200) {
+      ToastAndroid.show("Compra salva com sucesso", ToastAndroid.SHORT);
+    } else {
+      ToastAndroid.show(
+        "Alguma coisa deu errado. Tente novamente.",
+        ToastAndroid.SHORT
+      );
+    }
 
     setName("");
-    setId("");
+    setId(undefined);
     setPrice(0.0);
     setQuantity(0.0);
 
@@ -92,7 +102,7 @@ export default function Grocery() {
     }
   }
 
-  function handleAutoCompleteSelected(name: string, id: string) {
+  function handleAutoCompleteSelected(name: string, id: string | undefined) {
     setName(name);
     setId(id);
   }

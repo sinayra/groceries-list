@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, ToastAndroid, Alert } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 import styles from "./styles";
 import {
@@ -11,9 +11,10 @@ import {
   calculateMedian,
 } from "../../utils/purchaseMath";
 
-import { Grocery } from "../../types/Grocery";
+import { Grocery, Purchase } from "../../types/Grocery";
 import PurchaseList from "../../components/PurchaseList";
 import { Variables } from "../../styles/variables";
+import { getPurchases, deleteGroceries } from "../../services/database";
 
 interface RouteParams {
   item: Grocery;
@@ -22,42 +23,64 @@ interface RouteParams {
 export default function Detail() {
   const variables = Variables();
   const route = useRoute();
+  const navigation = useNavigation();
   const routeParams = route.params as RouteParams;
-  const { id, name, purchases } = routeParams.item;
+  const { id, name } = routeParams.item;
+  const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [maximum, setMaximum] = useState(0);
   const [minimum, setMinimum] = useState(0);
   const [mode, setMode] = useState(0);
   const [median, setMedian] = useState(0);
 
+  async function loadPurchases() {
+    const result = await getPurchases(id as string);
+    setPurchases(result);
+  }
+
   useEffect(() => {
-    const pricesPerUnit = createPricePerUnitArray(purchases);
-
-    setMode(calculateThresholdMode(pricesPerUnit, 0.1));
-    setMaximum(calculateMax(pricesPerUnit));
-    setMinimum(calculateMin(pricesPerUnit));
-    setMedian(calculateMedian(pricesPerUnit));
-
-    purchases.sort(function (a, b) {
-      const keyA = a.date;
-      const keyB = b.date;
-
-      if (keyA < keyB) return -1;
-      if (keyA > keyB) return 1;
-      return 0;
-    });
+    loadPurchases();
   }, []);
 
-  function handleDeleteGrocery() {
-    console.log(id);
-    ToastAndroid.show("not implemented", ToastAndroid.SHORT);
+  useEffect(() => {
+    if (purchases.length > 0) {
+      const pricesPerUnit = createPricePerUnitArray(purchases);
+
+      setMode(calculateThresholdMode(pricesPerUnit, 0.1));
+      setMaximum(calculateMax(pricesPerUnit));
+      setMinimum(calculateMin(pricesPerUnit));
+      setMedian(calculateMedian(pricesPerUnit));
+
+      purchases.sort(function (a, b) {
+        const keyA = a.date;
+        const keyB = b.date;
+
+        if (keyA < keyB) return -1;
+        if (keyA > keyB) return 1;
+        return 0;
+      });
+    }
+  }, [purchases]);
+
+  async function handleDeleteGrocery() {
+    const result = await deleteGroceries(id as string);
+
+    if (result === 200) {
+      ToastAndroid.show("Compra deletada com sucesso", ToastAndroid.SHORT);
+      navigation.navigate("Home");
+    }
   }
 
-  function handleDeleteHistory(index: number) {
-    console.log(purchases[index]);
-    ToastAndroid.show("not implemented", ToastAndroid.SHORT);
+  async function handleDeleteHistory(idPurchase: string | undefined) {
+    console.log(id, idPurchase);
+    const result = await deleteGroceries(id as string, idPurchase as string);
+
+    if (result === 200) {
+      ToastAndroid.show("Compra deletada com sucesso", ToastAndroid.SHORT);
+      loadPurchases();
+    }
   }
 
-  function createAlert(message: string, purchaseArrayIndex: number) {
+  function createAlert(message: string, idPurchase: string | undefined) {
     Alert.alert(
       "Excluir entrada",
       message,
@@ -69,8 +92,8 @@ export default function Detail() {
         {
           text: "Ok",
           onPress: () =>
-            purchaseArrayIndex >= 0
-              ? handleDeleteHistory(purchaseArrayIndex)
+            idPurchase
+              ? handleDeleteHistory(idPurchase)
               : handleDeleteGrocery(),
         },
       ],
@@ -157,7 +180,7 @@ export default function Detail() {
         onPress={() =>
           createAlert(
             `Atenção, você está prestes a excluir o produto ${name}. Essa ação é irreversível. Deseja continuar?`,
-            -1
+            undefined
           )
         }
       >

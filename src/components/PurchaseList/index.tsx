@@ -6,7 +6,7 @@ import { Variables } from "../../styles/variables";
 import styles from "./styles";
 
 interface PurchaseListPropsProps {
-  createAlert: (message: string, index: number) => void;
+  createAlert: (message: string, idPurchase: string|undefined) => void;
   purchases: Purchase[];
 }
 
@@ -24,10 +24,10 @@ const PurchaseList: React.FC<PurchaseListPropsProps> = ({
       </Text>
       <FlatList
         data={purchases}
-        renderItem={({ item, index }: { item: Purchase; index: number }) => (
-          <PurchaseItem item={item} index={index} createAlert={createAlert} />
+        renderItem={({ item }: { item: Purchase}) => (
+          <PurchaseItem item={item} idPurchase={item.id} createAlert={createAlert} />
         )}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item.id as string}
       />
     </>
   );

@@ -6,7 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import GroceryList from "../../components/GroceryList";
 import styles from "./styles";
 
-import data from "../../services/mock";
+import { getGroceries } from "../../services/database";
 import { Grocery } from "../../types/Grocery";
 import { Variables } from "../../styles/variables";
 
@@ -14,11 +14,25 @@ export default function Home() {
   const variables = Variables();
   const navigation = useNavigation();
   const [filter, setFilter] = useState("");
-  const [productsList] = useState<Grocery[]>(data);
-  const [filteredList, setFilteredList] = useState<Grocery[]>(data);
+  const [productsList, setProductsList] = useState<Grocery[]>([]);
+  const [filteredList, setFilteredList] = useState<Grocery[]>([]);
+
+  async function readDataFromDatabase() {
+      const result = await getGroceries();
+
+      if(result){
+        setProductsList(result);
+        setFilteredList(result);
+      }
+    }
 
   useEffect(() => {
-    if (filter.length > 0) {
+    
+    readDataFromDatabase();
+  }, []);
+
+  useEffect(() => {
+    if (productsList && filter.length > 0) {
       const filterLower = filter.toLowerCase();
       const filtered = productsList.filter((p) =>
         p.name.toLowerCase().includes(filterLower)
