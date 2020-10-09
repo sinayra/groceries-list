@@ -1,4 +1,4 @@
-import firebase from "../config/firebase";
+import firebase from "./firebase";
 import { Grocery, Purchase } from "../types/Grocery";
 
 const database = firebase.database();

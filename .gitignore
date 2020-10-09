@@ -66,5 +66,5 @@ web-build/
 package-lock.json
 
 #config
-src/config/firebase.json
+src/config/keys.json
 google-services.json
