@@ -9,6 +9,7 @@ import DefaultTheme from "./styles/DefaultTheme";
 import Home from "./pages/Home";
 import Grocery from "./pages/Grocery";
 import Detail from "./pages/Detail";
+import Login from "./pages/Login";
 
 const AppStack = createStackNavigator();
 
@@ -19,12 +20,8 @@ const Routes = () => {
     <NavigationContainer theme={scheme === "dark" ? DarkTheme : DefaultTheme}>
       <AppStack.Navigator
         headerMode="none"
-        screenOptions={{
-          cardStyle: {
-            backgroundColor: scheme === "dark" ? DarkTheme.colors.background: DefaultTheme.colors.background,
-          },
-        }}
       >
+        <AppStack.Screen name="Login" component={Login} />
         <AppStack.Screen name="Home" component={Home} />
         <AppStack.Screen name="Grocery" component={Grocery} />
         <AppStack.Screen name="Detail" component={Detail} />
