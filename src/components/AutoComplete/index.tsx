@@ -20,7 +20,6 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({ onSelected, filter }) => {
   useEffect(() => {
     async function readDataFromDatabase() {
       const result = await getGroceries();
-      console.log(result);
 
       if(result){
         setProductsList(result);
