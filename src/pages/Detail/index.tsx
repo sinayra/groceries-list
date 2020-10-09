@@ -126,7 +126,7 @@ export default function Detail() {
               <Text
                 style={{ ...styles.priceText, color: variables.TEXT_COLOR }}
               >
-                Max: R${maximum.toFixed(2)}
+                Max: €{maximum.toFixed(2)}
               </Text>
             </View>
 
@@ -139,7 +139,7 @@ export default function Detail() {
               <Text
                 style={{ ...styles.priceText, color: variables.TEXT_COLOR }}
               >
-                Min: R$ {minimum.toFixed(2)}
+                Min: €{minimum.toFixed(2)}
               </Text>
             </View>
 
@@ -152,7 +152,7 @@ export default function Detail() {
               <Text
                 style={{ ...styles.priceText, color: variables.TEXT_COLOR }}
               >
-                Preço mediano: R${median.toFixed(2)}
+                Preço mediano: €{median.toFixed(2)}
               </Text>
             </View>
 
@@ -165,7 +165,7 @@ export default function Detail() {
               <Text
                 style={{ ...styles.priceText, color: variables.TEXT_COLOR }}
               >
-                Preço estimado: R${mode.toFixed(2)}
+                Preço estimado: €{mode.toFixed(2)}
               </Text>
             </View>
           </View>

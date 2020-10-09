@@ -58,7 +58,7 @@ const GroceryItem = ({ item }: { item: Grocery }) => {
               style={{ paddingRight: 5 }}
             />
             <Text style={{ ...styles.price, color: variables.TEXT_COLOR }}>
-              R$ {minimum.toFixed(2)}
+              €{minimum.toFixed(2)}
             </Text>
           </View>
 
@@ -70,7 +70,7 @@ const GroceryItem = ({ item }: { item: Grocery }) => {
               style={{ paddingRight: 5 }}
             />
             <Text style={{ ...styles.price, color: variables.TEXT_COLOR }}>
-              R$ {median.toFixed(2)}
+              €{median.toFixed(2)}
             </Text>
           </View>
 
@@ -82,7 +82,7 @@ const GroceryItem = ({ item }: { item: Grocery }) => {
               style={{ paddingRight: 5 }}
             />
             <Text style={{ ...styles.price, color: variables.TEXT_COLOR }}>
-              R$ {maximum.toFixed(2)}
+              €{maximum.toFixed(2)}
             </Text>
           </View>
         </View>

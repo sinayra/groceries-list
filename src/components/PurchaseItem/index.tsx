@@ -30,10 +30,10 @@ const PurchaseItem: React.FC<PurchaseItemPropsProps> = ({
           {displayCompleteDate(item.date)}
         </Text>
         <Text style={{ color: variables.TEXT_COLOR }}>
-          Valor por unidade: R${(item.price / item.quantity).toFixed(2)}
+          Valor por unidade: €{(item.price / item.quantity).toFixed(2)}
         </Text>
         <Text style={{ color: variables.TEXT_COLOR }}>
-          Valor pago: R${item.price.toFixed(2)}
+          Valor pago: €{item.price.toFixed(2)}
         </Text>
       </View>
       <TouchableOpacity
