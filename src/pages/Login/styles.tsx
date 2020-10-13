@@ -15,9 +15,31 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
+  },
+  button: {
+    height: 60,
+    flexDirection: "row",
+    overflow: "hidden",
+    marginTop: 8,
+    backgroundColor: "rgb(70,136,241)"
+  },
+  logo: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  buttonContent: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexWrap: "nowrap",
+    flexDirection: "row"
+  },
+  buttonText: {
+    textAlign: "center",
+    flex: 1,
+    fontFamily: "Roboto_500Medium",
   },
 });
 
