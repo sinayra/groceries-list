@@ -5,7 +5,7 @@ const database = firebase.database();
 
 export async function getGroceries(): Promise<Grocery[]> {
   const promise: Promise<Grocery[]> = new Promise((resolve, reject) => {
-    database.ref("/groceries").on("value", (snapshot) => {
+    database.ref("/groceries").orderByChild("name").on("value", (snapshot) => {
       let groceries: Grocery[] = [];
 
       snapshot.forEach((elemSnapshot) => {

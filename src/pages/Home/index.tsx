@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, SafeAreaView, TextInput } from "react-native";
+import { View, TouchableOpacity, SafeAreaView, TextInput, ToastAndroid } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -17,18 +17,21 @@ export default function Home() {
   const [productsList, setProductsList] = useState<Grocery[]>([]);
   const [filteredList, setFilteredList] = useState<Grocery[]>([]);
 
-  async function readDataFromDatabase() {
-      const result = await getGroceries();
+  async function loadFromDatabase() {
+    const result = await getGroceries();
+    setFilter("");
 
-      if(result){
-        setProductsList(result);
-        setFilteredList(result);
-      }
+    if (result) {
+      ToastAndroid.show("Firebase carregado com sucesso", ToastAndroid.SHORT);
+      setProductsList(result);
+      setFilteredList(result);
     }
+  }
 
   useEffect(() => {
-    
-    readDataFromDatabase();
+    navigation.addListener("focus", () => {
+      loadFromDatabase();
+    });
   }, []);
 
   useEffect(() => {
