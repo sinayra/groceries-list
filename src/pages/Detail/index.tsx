@@ -18,6 +18,7 @@ import { getPurchases, deleteGroceries } from "../../services/database";
 
 interface RouteParams {
   item: Grocery;
+  onPressBackButton: () => void;
 }
 
 export default function Detail() {
@@ -42,23 +43,21 @@ export default function Detail() {
   }, []);
 
   useEffect(() => {
-    if (purchases.length > 0) {
-      const pricesPerUnit = createPricePerUnitArray(purchases);
+    const pricesPerUnit = createPricePerUnitArray(purchases);
 
-      setMode(calculateThresholdMode(pricesPerUnit, 0.1));
-      setMaximum(calculateMax(pricesPerUnit));
-      setMinimum(calculateMin(pricesPerUnit));
-      setMedian(calculateMedian(pricesPerUnit));
+    setMode(calculateThresholdMode(pricesPerUnit, 0.1));
+    setMaximum(calculateMax(pricesPerUnit));
+    setMinimum(calculateMin(pricesPerUnit));
+    setMedian(calculateMedian(pricesPerUnit));
 
-      purchases.sort(function (a, b) {
-        const keyA = a.date;
-        const keyB = b.date;
+    purchases.sort(function (a, b) {
+      const keyA = a.date;
+      const keyB = b.date;
 
-        if (keyA < keyB) return -1;
-        if (keyA > keyB) return 1;
-        return 0;
-      });
-    }
+      if (keyA < keyB) return -1;
+      if (keyA > keyB) return 1;
+      return 0;
+    });
   }, [purchases]);
 
   async function handleDeleteGrocery() {
@@ -71,7 +70,6 @@ export default function Detail() {
   }
 
   async function handleDeleteHistory(idPurchase: string | undefined) {
-    console.log(id, idPurchase);
     const result = await deleteGroceries(id as string, idPurchase as string);
 
     if (result === 200) {

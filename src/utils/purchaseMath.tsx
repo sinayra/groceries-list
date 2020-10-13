@@ -13,6 +13,11 @@ export function createPricePerUnitArray(purchases: Purchase[]) {
 }
 
 export function calculateMode(pricesPerUnit: number[]) {
+  
+  if(pricesPerUnit.length === 0){
+    return 0;
+  }
+
   pricesPerUnit.sort();
 
   let current = {
@@ -50,6 +55,9 @@ export function calculateThresholdMode(
 ) {
   const thresholdPrices = new MaxHeap();
 
+  if(pricesPerUnit.length === 0){
+    return 0;
+  }
   pricesPerUnit.sort();
 
   let i = 0;
@@ -81,6 +89,11 @@ export function calculateThresholdMode(
 
 export function calculateMedian(pricesPerUnit: number[]) {
   let median = 0;
+  
+  if(pricesPerUnit.length === 0){
+    return 0;
+  }
+
   const halfIndex = Math.round(pricesPerUnit.length / 2);
 
   if (halfIndex > 0) {
@@ -98,6 +111,10 @@ export function calculateMedian(pricesPerUnit: number[]) {
 export function calculateMax(pricesPerUnit: number[]) {
   let max = 0;
 
+  if(pricesPerUnit.length === 0){
+    return 0;
+  }
+
   for (let i = 0; i < pricesPerUnit.length; i++) {
     if (pricesPerUnit[i] > max) {
       max = pricesPerUnit[i];
@@ -110,6 +127,10 @@ export function calculateMax(pricesPerUnit: number[]) {
 export function calculateMin(pricesPerUnit: number[]) {
   let min = Number.MAX_SAFE_INTEGER;
 
+  if(pricesPerUnit.length === 0){
+    return 0;
+  }
+
   for (let i = 0; i < pricesPerUnit.length; i++) {
     if (pricesPerUnit[i] < min) {
       min = pricesPerUnit[i];
@@ -120,6 +141,11 @@ export function calculateMin(pricesPerUnit: number[]) {
 }
 
 export function calculateAverage(pricesPerUnit: number[]) {
+
+  if(pricesPerUnit.length === 0){
+    return 0;
+  }
+
   const sum = pricesPerUnit.reduce((acc, cur) => acc + cur, 0);
   const len = pricesPerUnit.length;
 
