@@ -41,26 +41,39 @@ export default function Grocery() {
     }
   }, [name, id]);
 
-  async function handleSavePurchase() {
-    console.log(id, name, date, price, quantity);
-    const result = await setGroceries(id, name, date, price, quantity);
-
-    if (result === 200) {
-      ToastAndroid.show("Compra salva com sucesso", ToastAndroid.SHORT);
-    } else {
-      ToastAndroid.show(
-        "Alguma coisa deu errado. Tente novamente.",
-        ToastAndroid.SHORT
-      );
+  function isRequiredFieldsFilled() {
+    if (id === undefined || name.length === 0 || price <= 0 || quantity <= 0) {
+      return false;
     }
 
-    setName("");
-    setId(undefined);
-    setPrice(0.0);
-    setQuantity(0.0);
+    return true;
+  }
 
-    setPriceInput("");
-    setQuantityInput("");
+  async function handleSavePurchase() {
+    console.log(id, name, date, price, quantity);
+    if (isRequiredFieldsFilled()) {
+      const result = await setGroceries(id, name, date, price, quantity);
+
+      if (result === 200) {
+        ToastAndroid.show("Compra salva com sucesso", ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(
+          "Alguma coisa deu errado. Tente novamente.",
+          ToastAndroid.SHORT
+        );
+      }
+
+      setName("");
+      setId(undefined);
+      setPrice(0.0);
+      setQuantity(0.0);
+
+      setPriceInput("");
+      setQuantityInput("");
+    }
+    else{
+      ToastAndroid.show("Preencha todos os campos antes de adicionar uma compra", ToastAndroid.LONG);
+    }
   }
 
   function handlePriceInput(val: string | undefined) {
@@ -137,6 +150,7 @@ export default function Grocery() {
             }}
             value={name}
             onChangeText={(val) => setName(val)}
+            autoCapitalize="sentences"
             placeholder="Nome do produto"
             placeholderTextColor={variables.BORDER_COLOR}
             onFocus={() => {
