@@ -42,7 +42,7 @@ export default function Grocery() {
   }, [name, id]);
 
   function isRequiredFieldsFilled() {
-    if (id === undefined || name.length === 0 || price <= 0 || quantity <= 0) {
+    if (name.length === 0 || price <= 0 || quantity <= 0 || date <= 0) {
       return false;
     }
 
@@ -50,7 +50,7 @@ export default function Grocery() {
   }
 
   async function handleSavePurchase() {
-    console.log(id, name, date, price, quantity);
+
     if (isRequiredFieldsFilled()) {
       const result = await setGroceries(id, name, date, price, quantity);
 
