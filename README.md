@@ -1,35 +1,45 @@
-# [TypeScript Example](https://www.typescriptlang.org/)
+# Preços do mercadinho - Grocery prices compare app
 
 <p>
-  <!-- iOS -->
-  <img alt="Supports Expo iOS" longdesc="Supports Expo iOS" src="https://img.shields.io/badge/iOS-4630EB.svg?style=flat-square&logo=APPLE&labelColor=999999&logoColor=fff" />
   <!-- Android -->
   <img alt="Supports Expo Android" longdesc="Supports Expo Android" src="https://img.shields.io/badge/Android-4630EB.svg?style=flat-square&logo=ANDROID&labelColor=A4C639&logoColor=fff" />
-  <!-- Web -->
-  <img alt="Supports Expo Web" longdesc="Supports Expo Web" src="https://img.shields.io/badge/web-4630EB.svg?style=flat-square&logo=GOOGLE-CHROME&labelColor=4285F4&logoColor=fff" />
+
 </p>
 
-```sh
-npx create-react-native-app -t with-typescript
-```
+This app displays a list of purchases to help you evaluates if some item is expensive or not. After you register a purchase, it calculates what price of this item you should expect from this item next time you visit a market.
 
-
-TypeScript is a superset of JavaScript which gives you static types and powerful tooling in Visual Studio Code including autocompletion and useful inline warnings for type errors.
+<img src="instructions/login.jpg" width="150">
+<img src="instructions/list.jpg" width="150">
+<img src="instructions/details.jpg" width="150">
+<img src="instructions/add.jpg" width="150">
 
 ## 🚀 How to use
 
-#### Creating a new project
+If you also want to use this app, follow these [instructions](instructions/README.md).
 
-- Install the CLI: `npm i -g expo-cli`
-- Create a project: `expo init --template expo-template-blank-typescript`
-- `cd` into the project
+## 🤔 Final thoughts
 
-### Adding TypeScript to existing projects
+### Pros
 
-- Copy the `tsconfig.json` from this repo, or new typescript template
-- Add typescript dependencies: `yarn add --dev @types/react @types/react-native @types/react-dom typescript`
-- Rename files tpo TypeScript, `.tsx` for React components and `.ts` for plain typescript files
+Groceries' prices where I lived fluctuates very frequently, and it's not a easy task to track them or to check if some product has a real discount or not. Before, I was using Google sheets to register these prices, but soon enough the list grows exponentially and many times I'd lost history prices for a specific item.
+
+This app is a very personal need that I have and I'm pretty sure there are other apps that can do the same thing. However, this was a good opportunity to me to practice Typescript, to discover by myself how to use React Native to create a nice interface, to study in a very superficial layer some statistics to estimate prices and use on a real application what I have studied in Algorithms course, since I create my own Max Heap data structure.
+
+
+### Caveats
+
+It's a very simple app with no sensitive data on it whatsoever, so everything should work locally. But, since me and my family will be using it, it must have some kind of data persistence for ours smartphones.
+
+I've chosen Firebase to host its database. Although it's very simple database, it's make no sense to leave it public (*I don't want anyone to change my potato price*), so I've added a login page, also using Firebase authentication and Expo Google Sign in.
+
+Adding firebase and a login added a complexity layer that I wasn't expecting for this simple app, and the simplest solution was to add a json file which is not committed for git. It's not recommend to store API keys in `json` files or `.env` files, but I've also didn't want another to add another complexity layer to this application to **just** keep track of my groceries prices. 
+
+Besides this issue, this project is missing tests, which I confess I found very difficult to know what parts of my code I should test, specially test React: I personally think testing Node/Java more intuitive than testing React or Vue.
+
+### Veredict
+
+I loved this project, not only because it was a problem that I had that I personally believes solved it completely, but also highlighted some of my weakness that I should work harder for the next projects.
 
 ## 📝 Notes
 
-- [Expo TypeScript guide](https://docs.expo.io/versions/latest/guides/typescript/)
+- Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
