@@ -50,7 +50,6 @@ export default function Grocery() {
   }
 
   async function handleSavePurchase() {
-
     if (isRequiredFieldsFilled()) {
       const result = await setGroceries(id, name, date, price, quantity);
 
@@ -70,9 +69,11 @@ export default function Grocery() {
 
       setPriceInput("");
       setQuantityInput("");
-    }
-    else{
-      ToastAndroid.show("Preencha todos os campos antes de adicionar uma compra", ToastAndroid.LONG);
+    } else {
+      ToastAndroid.show(
+        "Preencha todos os campos antes de adicionar uma compra",
+        ToastAndroid.LONG
+      );
     }
   }
 
@@ -85,8 +86,8 @@ export default function Grocery() {
         setPriceInput(val);
       }
     } else {
-      setQuantity(0);
-      setQuantityInput("");
+      setPrice(0);
+      setPriceInput("");
     }
   }
 
