@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, View, Text, Image } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
@@ -14,6 +14,7 @@ import logo from "../../assets/icon.png";
 export default function Login() {
   const navigation = useNavigation();
   const variables = Variables();
+  const [showLogin, setShowLogin] = useState(false);
 
   function logInSuccess() {
     navigation.navigate("Home");
@@ -22,7 +23,11 @@ export default function Login() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        setShowLogin(false);
         logInSuccess();
+      }
+      else{
+        setShowLogin(true);
       }
     });
   }, []);
@@ -65,35 +70,36 @@ export default function Login() {
         <View style={styles.logo}>
           <Image source={logo} />
         </View>
-
-        <RectButton
-          style={styles.button}
-          onPress={signInWithGoogle}
-        >
-          <View
-            style={{
-              ...styles.buttonContent,
-            }}
+        {showLogin &&
+          <RectButton
+            style={styles.button}
+            onPress={signInWithGoogle}
           >
-            <AntDesign
-              name="google"
+            <View
               style={{
-                paddingLeft: 15,
-              }}
-              size={variables.FONT_SIZE_LARGE + 18}
-              color="#FFF"
-            />
-            <Text
-              style={{
-                ...styles.buttonText,
-                color: "#FFF",
-                fontSize: variables.FONT_SIZE_LARGE + 5,
+                ...styles.buttonContent,
               }}
             >
-              Faça login no Google
+              <AntDesign
+                name="google"
+                style={{
+                  paddingLeft: 15,
+                }}
+                size={variables.FONT_SIZE_LARGE + 18}
+                color="#FFF"
+              />
+              <Text
+                style={{
+                  ...styles.buttonText,
+                  color: "#FFF",
+                  fontSize: variables.FONT_SIZE_LARGE + 5,
+                }}
+              >
+                Faça login no Google
             </Text>
-          </View>
-        </RectButton>
+            </View>
+          </RectButton>
+        }
       </View>
     </SafeAreaView>
   );
