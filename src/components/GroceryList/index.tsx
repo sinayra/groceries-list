@@ -20,7 +20,7 @@ const GroceryList: React.FC<GroceryListProps> = ({ data, filter }) => {
   }
 
   return (
-    <View>
+    <>
       {
         data.length > 0 ?
           <FlatList
@@ -35,7 +35,7 @@ const GroceryList: React.FC<GroceryListProps> = ({ data, filter }) => {
           </>
       }
 
-    </View>
+    </>
   );
 };
 
