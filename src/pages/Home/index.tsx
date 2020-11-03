@@ -71,7 +71,7 @@ export default function Home() {
           placeholderTextColor={variables.BORDER_COLOR}
         />
 
-        <GroceryList data={filteredList} />
+        <GroceryList data={filteredList} filter={filter}/>
       </View>
       <TouchableOpacity
         style={{ ...styles.floatingMenuButton, backgroundColor: "transparent" }}

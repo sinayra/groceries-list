@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ToastAndroid,
 } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Event } from "@react-native-community/datetimepicker";
@@ -17,8 +18,15 @@ import { displayShortDate } from "../../utils/date";
 import { Variables } from "../../styles/variables";
 import { setGroceries } from "../../services/database";
 
+interface RouteParams {
+  name?: string;
+}
+
 export default function Grocery() {
   const variables = Variables();
+
+  const route = useRoute();
+  const routeParams = route.params as RouteParams;
 
   const [name, setName] = useState("");
   const [id, setId] = useState<string | undefined>();
@@ -32,6 +40,12 @@ export default function Grocery() {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
   const [showNew, setShowNew] = useState(false);
+
+  useEffect(() => {
+    if(routeParams && routeParams.name && routeParams.name.length > 0){
+      handleAutoCompleteSelected(routeParams.name, undefined);
+    }
+  }, [])
 
   useEffect(() => {
     if (id === undefined && name.length > 0) {
