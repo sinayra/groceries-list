@@ -3,6 +3,7 @@
     "@expo-google-fonts/roboto": "^0.1.0",
     "@expo-google-fonts/ubuntu": "^0.1.0",
     "@react-firebase/database": "^0.3.11",
+    "@react-native-community/checkbox": "^0.5.5",
     "@react-native-community/datetimepicker": "^3.0.4",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.8.2",

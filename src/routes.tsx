@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Grocery from "./pages/Grocery";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
+import List from "./pages/List";
 
 const AppStack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const Routes = () => {
         <AppStack.Screen name="Home" component={Home} />
         <AppStack.Screen name="Grocery" component={Grocery} />
         <AppStack.Screen name="Detail" component={Detail} />
+        <AppStack.Screen name="List" component={List} />
       </AppStack.Navigator>
     </NavigationContainer>
   );

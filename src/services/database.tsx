@@ -108,16 +108,14 @@ export async function getPurchaseList(): Promise<Grocery[]> {
   const promise: Promise<Grocery[]> = new Promise((resolve, reject) => {
     database.ref("/list").on("value", (snapshot) => {
       let groceries: Grocery[] = [];
-      console.log(snapshot);
 
       snapshot.forEach((listId) => {
 
         const id = listId.key ? listId.key : undefined;
         const groceryId = listId.child("id").val();
-        console.log("ID", id)
+        const groceryQuantity = listId.child("quantity").val();
 
         database.ref(`/groceries/${groceryId}`).on("value", (grocery) => {
-          console.log("GROCERY", grocery)
           let purchases: Purchase[] = [];
           const name = grocery.child("name").val();
           const obj = grocery.child("purchases");
@@ -131,7 +129,7 @@ export async function getPurchaseList(): Promise<Grocery[]> {
             purchases.push({ id: purchaseId, date, price, quantity });
           });
 
-          groceries.push({ listId: id, id: groceryId, name, purchases });
+          groceries.push({ listQuantity: groceryQuantity, listId: id, id: groceryId, name, purchases });
         });
 
 
@@ -151,7 +149,22 @@ export async function addToPurchaseList(
   if (id) {
     const key = (await database.ref(`/list/${id}`).push()).key;
     database.ref(`list/${key}`).set({
-      id
+      id,
+      quantity: 1,
+    });
+    return 200;
+  } else {
+    return 500;
+  }
+}
+
+export async function setQuantity(
+  idList: string | undefined,
+  quantity: number
+) {
+  if (idList) {
+    database.ref(`/list/${idList}`).update({
+      quantity: quantity,
     });
     return 200;
   } else {

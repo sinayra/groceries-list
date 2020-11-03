@@ -12,6 +12,18 @@ export function createPricePerUnitArray(purchases: Purchase[]) {
   return pricesPerUnit;
 }
 
+export function createPaidPrice(purchases: Purchase[]) {
+  const pricesPerUnit = [];
+
+  for (const purchase of purchases) {
+    const pricePerUnit = purchase.quantity > 1 ? purchase.price / purchase.quantity : purchase.price;
+
+    pricesPerUnit.push(pricePerUnit);
+  }
+
+  return pricesPerUnit;
+}
+
 export function calculateMode(pricesPerUnit: number[]) {
   
   if(pricesPerUnit.length === 0){
