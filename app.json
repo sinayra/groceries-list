@@ -1,32 +1,33 @@
 {
-    "expo": {
-      "name": "Preços do mercadinho",
-      "slug": "precos-do-mercadinho",
-      "version": "1.1.0",
-      "orientation": "portrait",
-      "icon": "./assets/icon.png",
-      "userInterfaceStyle": "automatic",
-      "splash": {
-        "image": "./assets/splash.png",
-        "resizeMode": "contain",
-        "backgroundColor": "#ffffff"
-      },
-      "updates": {
-        "fallbackToCacheTimeout": 0
-      },
-      "assetBundlePatterns": [
-        "**/*"
-      ],
-      "ios": {
-        "supportsTablet": true
-      },
-      "web": {
-        "favicon": "./assets/favicon.png"
-      },
-      "android": {
-        "package": "com.my.precosmercadinho",
-        "googleServicesFile": "./google-services.json"
-      }
-    }
+  "expo": {
+    "name": "Preços do mercadinho",
+    "slug": "precos-do-mercadinho",
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.my.precosmercadinho",
+      "googleServicesFile": "./google-services.json"
+    },
+    "description": "",
+    "githubUrl": "https://github.com/sinayra/groceries-list"
+  }
 }
-  
