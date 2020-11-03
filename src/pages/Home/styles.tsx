@@ -16,11 +16,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-  floatingMenuButton: {
-    position: "absolute",
-    right: 20,
-    bottom: 30,
-  },
   input: {
     height: 54,
     color: "white",

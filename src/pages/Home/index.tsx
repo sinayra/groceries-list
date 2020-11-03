@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, SafeAreaView, TextInput, ToastAndroid } from "react-native";
+import { View, TouchableOpacity, SafeAreaView, TextInput, ToastAndroid, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 
 import GroceryList from "../../components/GroceryList";
+import Menu from "../../components/Menu";
 import styles from "./styles";
 
 import { getGroceries } from "../../services/database";
@@ -47,10 +48,6 @@ export default function Home() {
     }
   }, [filter]);
 
-  function handleAddPurchase() {
-    navigation.navigate("Grocery");
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -71,18 +68,9 @@ export default function Home() {
           placeholderTextColor={variables.BORDER_COLOR}
         />
 
-        <GroceryList data={filteredList} filter={filter}/>
+        <GroceryList data={filteredList} filter={filter} />
       </View>
-      <TouchableOpacity
-        style={{ ...styles.floatingMenuButton, backgroundColor: "transparent" }}
-        onPress={handleAddPurchase}
-      >
-        <FontAwesome
-          name="plus-circle"
-          size={variables.FONT_SIZE_LARGE + 30}
-          color={variables.PRIMARY_COLOR}
-        />
-      </TouchableOpacity>
+      <Menu focus="Home" />
     </SafeAreaView>
   );
 }
