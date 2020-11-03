@@ -103,3 +103,70 @@ export async function deleteGroceries(
 
   return 200;
 }
+
+export async function getPurchaseList(): Promise<Grocery[]> {
+  const promise: Promise<Grocery[]> = new Promise((resolve, reject) => {
+    database.ref("/list").on("value", (snapshot) => {
+      let groceries: Grocery[] = [];
+      console.log(snapshot);
+
+      snapshot.forEach((listId) => {
+
+        const id = listId.key ? listId.key : undefined;
+        const groceryId = listId.child("id").val();
+        console.log("ID", id)
+
+        database.ref(`/groceries/${groceryId}`).on("value", (grocery) => {
+          console.log("GROCERY", grocery)
+          let purchases: Purchase[] = [];
+          const name = grocery.child("name").val();
+          const obj = grocery.child("purchases");
+
+          obj.forEach((purchasesSnapshot) => {
+            const purchaseId = purchasesSnapshot.key ? purchasesSnapshot.key : undefined;
+            const date = purchasesSnapshot.child("date").val();
+            const price = purchasesSnapshot.child("price").val();
+            const quantity = purchasesSnapshot.child("quantity").val();
+
+            purchases.push({ id: purchaseId, date, price, quantity });
+          });
+
+          groceries.push({ listId: id, id: groceryId, name, purchases });
+        });
+
+
+      });
+
+      resolve(groceries);
+    });
+
+  });
+
+  return promise;
+}
+
+export async function addToPurchaseList(
+  id: string | undefined,
+) {
+  if (id) {
+    const key = (await database.ref(`/list/${id}`).push()).key;
+    database.ref(`list/${key}`).set({
+      id
+    });
+    return 200;
+  } else {
+    return 500;
+  }
+}
+
+export async function removeFromPurchaseList(
+  id: string | undefined,
+) {
+  if (id) {
+    await database.ref(`/list/${id}`).remove();
+
+    return 200;
+  } else {
+    return 500;
+  }
+}
