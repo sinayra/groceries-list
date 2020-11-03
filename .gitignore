@@ -64,6 +64,7 @@ web-build/
 
 # package-lock
 package-lock.json
+yarn.lock
 
 #config
 src/config/keys.json
