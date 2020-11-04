@@ -3,11 +3,11 @@ import { SafeAreaView, View, Text, Image } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import firebase from "../../services/firebase";
-import * as GoogleSignIn from "expo-google-sign-in";
+import * as Google from 'expo-google-app-auth';
 import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 
-import { androidClientId } from "../../config/keys.json";
+import { androidStandaloneAppClientId, webClientId } from "../../config/keys.json";
 import { Variables } from "../../styles/variables";
 import logo from "../../assets/icon.png";
 
@@ -34,20 +34,20 @@ export default function Login() {
 
   async function signInWithGoogle() {
     try {
-      await GoogleSignIn.initAsync({
-        clientId: androidClientId,
+      const result = await Google.logInAsync({
+        androidStandaloneAppClientId,
+        androidClientId: webClientId,
         scopes: ["profile", "email"],
       });
 
-      const { type, user } = await GoogleSignIn.signInAsync();
-
-      if (type === "success" && user) {
+      if (result.type === "success") {
         await firebase
           .auth()
           .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+          
         const credential = firebase.auth.GoogleAuthProvider.credential(
-          user.auth?.idToken,
-          user.auth?.accessToken
+          result.idToken,
+          result.accessToken
         );
         const googleProfileData = await firebase
           .auth()

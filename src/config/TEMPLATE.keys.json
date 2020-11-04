@@ -7,5 +7,6 @@
   "messagingSenderId": "",
   "appId": "",
   "measurementId": "",
-  "androidClientId": ""
+  "webClientId": "",
+  "androidStandaloneAppClientId": ""
 }

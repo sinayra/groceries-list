@@ -44,7 +44,8 @@ Facebook Key Hash:                  XXX
   "messagingSenderId": "FIREBASE KEY",
   "appId": "FIREBASE KEY",
   "measurementId": "FIREBASE KEY",
-  "androidClientId": ""
+  "webClientId": "",
+  "androidStandaloneAppClientId": "",
 }
 ```
 
@@ -56,13 +57,25 @@ Facebook Key Hash:                  XXX
 
 2. Get the **package name** from `app.json` and the *GOOGLE API & SERVICES FINGERPRINTS* from the previous step and fill the form that will show up.
 
-![Create a Google OAuth Client ID](7.png)
+![Create a Google Android OAuth Client ID](7.png)
 
-3. After that, it will copy your Android Client ID.
+3. Insert the name of the app (*eg: Preços do mercadinho*), and autorize the following urls:
 
-![Android Client ID](8.png)
+**Authorized Javascript origins**
 
-4. Paste this id into your `config/src/keys.json`. Now this file should be look like this:
+  1. https://localhost:19006
+  2. https://auth.expo.io
+
+**Authorized redirect origins**
+
+  1. https://localhost:19006
+  2. https://auth.expo.io/@yourname/your-appS (*eg: https://auth.expo.io/@sinayra/precos-do-mercadinho , usually the slug from app.json*)
+
+![Create a Google Web OAuth Client ID](14.png)
+
+4. After that, copy tour Client ID for each OAuth you created.
+
+5. Paste this id into your `config/src/keys.json`. Now this file should be look like this:
 
 ```json
 {
@@ -74,7 +87,8 @@ Facebook Key Hash:                  XXX
   "messagingSenderId": "FIREBASE KEY",
   "appId": "FIREBASE KEY",
   "measurementId": "FIREBASE KEY",
-  "androidClientId": "GOOGLE KEY"
+  "webClientId": "GOOGLE KEY FROM STEP 3",
+  "androidStandaloneAppClientId": "GOOGLE KEY FROM STEP 2",
 }
 ```
 
