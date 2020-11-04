@@ -17,14 +17,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.my.precosmercadinho",
+      "package": "com.sinayra.precosdomercadinho",
       "googleServicesFile": "./google-services.json"
     },
     "description": "",
