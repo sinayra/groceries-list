@@ -19,11 +19,11 @@ const PurchaseCheckItem = ({ item, addToList, reload }: { item: Grocery, addToLi
 
     const { name } = item;
 
-    function calculatePrice(quantity: number){
+    function calculatePrice(quantity?: number){
         const purchaseHistory = createPaidPrice(item.purchases);
         const mode = calculateThresholdMode(purchaseHistory, 0.1);
 
-        if (quantity > 0) {
+        if (quantity && quantity > 0) {
             setPrice(mode * quantity);
         }
         else{
@@ -32,9 +32,7 @@ const PurchaseCheckItem = ({ item, addToList, reload }: { item: Grocery, addToLi
     }
 
     useEffect(() => {
-        if(item.listQuantity && item.listQuantity){
-            calculatePrice(item.listQuantity);
-        }
+        calculatePrice(item.listQuantity);
     }, []);
 
 
