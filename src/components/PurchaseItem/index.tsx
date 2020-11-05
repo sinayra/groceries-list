@@ -49,7 +49,7 @@ const PurchaseItem: React.FC<PurchaseItemPropsProps> = ({
         <Feather
           name="trash-2"
           size={variables.FONT_SIZE_LARGE + 10}
-          color={variables.YELLOW_COLOR}
+          color={variables.RED_COLOR}
         />
       </TouchableOpacity>
     </View>

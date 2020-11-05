@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView, ToastAndroid, Alert } from "react-native";
+import { View, Text, SafeAreaView, ToastAndroid, TouchableOpacity } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
 import { RectButton } from "react-native-gesture-handler";
+import Dialog from "react-native-dialog";
+
 import styles from "./styles";
 import {
   createPricePerUnitArray,
@@ -14,7 +17,7 @@ import {
 import { Grocery, Purchase } from "../../types/Grocery";
 import PurchaseList from "../../components/PurchaseList";
 import { Variables } from "../../styles/variables";
-import { getPurchases, deleteGrocery } from "../../services/database";
+import { getPurchases, deleteGrocery, editGrocery } from "../../services/database";
 
 interface RouteParams {
   item: Grocery;
@@ -27,11 +30,19 @@ export default function Detail() {
   const navigation = useNavigation();
   const routeParams = route.params as RouteParams;
   const { id, name } = routeParams.item;
+
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [maximum, setMaximum] = useState(0);
   const [minimum, setMinimum] = useState(0);
   const [mode, setMode] = useState(0);
   const [median, setMedian] = useState(0);
+  const [deleteMessage, setDeleteMessage] = useState(false);
+  const [editMessage, setEditMessage] = useState(false);
+  const [newName, setNewName] = useState(name);
+  const [oldName, setOldName] = useState(name);
+
+  const [message, setMessage] = useState("");
+  const [idPurchase, setIdPurchase] = useState<string | undefined>("")
 
   async function loadPurchases() {
     const result = await getPurchases(id as string);
@@ -65,7 +76,7 @@ export default function Detail() {
 
     if (result === 200) {
       ToastAndroid.show("Compra deletada com sucesso", ToastAndroid.SHORT);
-      navigation.navigate("Menu", {screen: "Home"});
+      navigation.navigate("Menu", { screen: "Home" });
     }
   }
 
@@ -78,32 +89,21 @@ export default function Detail() {
     }
   }
 
-  function createAlert(message: string, idPurchase: string | undefined) {
-    Alert.alert(
-      "Excluir entrada",
-      message,
-      [
-        {
-          text: "Cancelar",
-          style: "cancel",
-        },
-        {
-          text: "Ok",
-          onPress: () =>
-            idPurchase
-              ? handleDeleteHistory(idPurchase)
-              : handleDeleteGrocery(),
-        },
-      ],
-      { cancelable: true }
-    );
+  function showDeleteMessage(message: string, id: string | undefined) {
+    setMessage(message);
+    setIdPurchase(id);
+    setDeleteMessage(true);
+  }
+
+  const showEditMessage = () => {
+    setEditMessage(true);
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, flexDirection: "row" }}>
             <Text
               style={{
                 ...styles.title,
@@ -111,8 +111,20 @@ export default function Detail() {
                 fontSize: variables.FONT_SIZE_LARGE + 10,
               }}
             >
-              {name}
+              {oldName}
             </Text>
+            <TouchableOpacity
+              onPress={() => {
+                setEditMessage(true);
+              }}
+            >
+              <Feather
+                name="edit"
+                size={variables.FONT_SIZE_LARGE + 10}
+                color={variables.PRIMARY_COLOR}
+              />
+            </TouchableOpacity>
+
           </View>
           <View style={styles.prices}>
             <View
@@ -168,7 +180,7 @@ export default function Detail() {
             </View>
           </View>
         </View>
-        <PurchaseList createAlert={createAlert} purchases={purchases} />
+        <PurchaseList createAlert={showDeleteMessage} purchases={purchases} />
       </View>
       <RectButton
         style={{
@@ -176,8 +188,8 @@ export default function Detail() {
           backgroundColor: variables.NOTIFICATION_COLOR,
         }}
         onPress={() =>
-          createAlert(
-            `Atenção, você está prestes a excluir o produto ${name}. Essa ação é irreversível. Deseja continuar?`,
+          showDeleteMessage(
+            `Atenção, você está prestes a excluir o produto ${oldName}. Essa ação é irreversível. Deseja continuar?`,
             undefined
           )
         }
@@ -192,6 +204,42 @@ export default function Detail() {
           Excluir
         </Text>
       </RectButton>
+
+      <Dialog.Container visible={editMessage} onBackdropPress={() => setEditMessage(false)}>
+        <Dialog.Title>Editar entrada</Dialog.Title>
+
+        <Dialog.Input label="Digite o nome do produto" onChangeText={text => setNewName(text)} />
+
+        <Dialog.Button onPress={() => {
+          setNewName(oldName);
+          setEditMessage(false);
+        }} label="Cancelar" />
+        <Dialog.Button onPress={() => {
+          editGrocery(id, newName);
+          setOldName(newName);
+          setEditMessage(false);
+        }} label="Editar" />
+
+      </Dialog.Container>
+
+      <Dialog.Container visible={deleteMessage} onBackdropPress={() => setEditMessage(false)}>
+        <Dialog.Title>Excluir entrada</Dialog.Title>
+
+        <Dialog.Description>
+          {message}
+        </Dialog.Description>
+
+        <Dialog.Button onPress={() => { setNewName(name); setDeleteMessage(false); }} label="Cancelar" />
+        <Dialog.Button onPress={() => {
+          idPurchase
+            ? handleDeleteHistory(idPurchase)
+            : handleDeleteGrocery();
+
+          setDeleteMessage(false);
+        }} label="Deletar" />
+
+      </Dialog.Container>
+
     </SafeAreaView>
   );
 }

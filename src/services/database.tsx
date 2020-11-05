@@ -97,6 +97,22 @@ export async function insertGroceryHistory(
   }
 }
 
+export async function editGrocery(
+  id: string | undefined,
+  name: string,
+) {
+  if (id) {
+    await database.ref(`groceries/${id}`).update({
+      name
+    });
+
+    return 200;
+  }
+  else {
+    return 500;
+  }
+}
+
 export async function deleteGrocery(
   idGrocery: string,
   idPurchase: string | null = null
@@ -110,18 +126,18 @@ export async function deleteGrocery(
   }
 
   database
-      .ref(`/list/`).on("value", (snapshot) => {
-  
-        snapshot.forEach((elemSnapshot) => {
-          const id = elemSnapshot.key ? elemSnapshot.key : undefined;
-          const currentIdGrocery = elemSnapshot.child("id").val();
+    .ref(`/list/`).on("value", (snapshot) => {
 
-          if(currentIdGrocery === idGrocery ){
-            removeFromPurchaseList(id);
-          }
-        });
-  
+      snapshot.forEach((elemSnapshot) => {
+        const id = elemSnapshot.key ? elemSnapshot.key : undefined;
+        const currentIdGrocery = elemSnapshot.child("id").val();
+
+        if (currentIdGrocery === idGrocery) {
+          removeFromPurchaseList(id);
+        }
       });
+
+    });
 
   return 200;
 }
