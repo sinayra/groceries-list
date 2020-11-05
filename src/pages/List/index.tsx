@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, TextInput, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import PurchaseCheckList from "../../components/PurchaseCheckList";
 import styles from "./styles";
@@ -11,12 +12,19 @@ import { createPaidPrice, calculateThresholdMode } from "../../utils/purchaseMat
 
 export default function List() {
     const variables = Variables();
+    const navigation = useNavigation();
     const [filter, setFilter] = useState("");
     const [purchaseList, setPurchaseList] = useState<Grocery[]>([]);
     const [productsList, setProductsList] = useState<Grocery[]>([]);
     const [filteredList, setFilteredList] = useState<Grocery[]>([]);
 
     const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        navigation.addListener("focus", () => {
+          loadFromDatabase();
+        });
+      }, []);
 
     function calculateTotal(){
         let acc = 0;
@@ -126,7 +134,7 @@ export default function List() {
                     placeholderTextColor={variables.BORDER_COLOR}
                 />
 
-                <PurchaseCheckList data={filteredList} addToList={true} reload={loadPurchaseArray} />
+                <PurchaseCheckList data={filteredList} addToList={true} reload={loadPurchaseArray} filter={filter} />
             </View>
 
         </SafeAreaView>

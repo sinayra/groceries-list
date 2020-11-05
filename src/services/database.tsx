@@ -54,7 +54,22 @@ export async function getPurchases(id: string): Promise<Purchase[]> {
   return promise;
 }
 
-export async function setGroceries(
+export async function insertGrocery(
+  name: string
+) {
+  const key = (await database.ref("/groceries").push()).key;
+
+  if (key !== null) {
+    database.ref(`groceries/${key}`).set({
+      name,
+      purchases: {},
+    });
+  }
+
+  return key;
+}
+
+export async function insertGroceryHistory(
   id: string | undefined,
   name: string,
   date: number,
@@ -64,14 +79,7 @@ export async function setGroceries(
   let grocery: string | null | undefined = id;
 
   if (grocery === undefined) {
-    grocery = (await database.ref("/groceries").push()).key;
-
-    if (grocery !== null) {
-      database.ref(`groceries/${grocery}`).set({
-        name,
-        purchases: {},
-      });
-    }
+    grocery = await insertGrocery(name);
   }
 
   if (grocery !== null) {
@@ -89,7 +97,7 @@ export async function setGroceries(
   }
 }
 
-export async function deleteGroceries(
+export async function deleteGrocery(
   idGrocery: string,
   idPurchase: string | null = null
 ) {
@@ -100,6 +108,20 @@ export async function deleteGroceries(
       .ref(`/groceries/${idGrocery}/purchases/${idPurchase}`)
       .remove();
   }
+
+  database
+      .ref(`/list/`).on("value", (snapshot) => {
+  
+        snapshot.forEach((elemSnapshot) => {
+          const id = elemSnapshot.key ? elemSnapshot.key : undefined;
+          const currentIdGrocery = elemSnapshot.child("id").val();
+
+          if(currentIdGrocery === idGrocery ){
+            removeFromPurchaseList(id);
+          }
+        });
+  
+      });
 
   return 200;
 }
@@ -112,24 +134,24 @@ export async function getPurchaseList(): Promise<Grocery[]> {
       snapshot.forEach((listId) => {
 
         const id = listId.key ? listId.key : undefined;
-        const groceryId = listId.child("id").val();
-        const groceryQuantity = listId.child("quantity").val();
+        const idGrocery = listId.child("id").val();
+        const quantityGrocery = listId.child("quantity").val();
 
-        database.ref(`/groceries/${groceryId}`).on("value", (grocery) => {
+        database.ref(`/groceries/${idGrocery}`).on("value", (grocery) => {
           let purchases: Purchase[] = [];
           const name = grocery.child("name").val();
           const obj = grocery.child("purchases");
 
           obj.forEach((purchasesSnapshot) => {
-            const purchaseId = purchasesSnapshot.key ? purchasesSnapshot.key : undefined;
+            const idPurchase = purchasesSnapshot.key ? purchasesSnapshot.key : undefined;
             const date = purchasesSnapshot.child("date").val();
             const price = purchasesSnapshot.child("price").val();
             const quantity = purchasesSnapshot.child("quantity").val();
 
-            purchases.push({ id: purchaseId, date, price, quantity });
+            purchases.push({ id: idPurchase, date, price, quantity });
           });
 
-          groceries.push({ listQuantity: groceryQuantity, listId: id, id: groceryId, name, purchases });
+          groceries.push({ listQuantity: quantityGrocery, listId: id, id: idGrocery, name, purchases });
         });
 
 

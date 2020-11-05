@@ -2,7 +2,7 @@
   "expo": {
     "name": "Preços do mercadinho",
     "slug": "precos-do-mercadinho",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -24,7 +24,7 @@
       "package": "com.sinayra.precosdomercadinho",
       "googleServicesFile": "./google-services.json"
     },
-    "description": "",
+    "description": "This app displays a list of purchases to help you evaluates if some item is expensive or not. After you register a purchase, it calculates what price of this item you should expect next time you visit a market.",
     "githubUrl": "https://github.com/sinayra/groceries-list"
   }
 }

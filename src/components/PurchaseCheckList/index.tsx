@@ -1,5 +1,7 @@
 import React from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList, Text, TouchableHighlight, ToastAndroid } from "react-native";
+
+import { addToPurchaseList, insertGrocery } from "../../services/database";
 import { Grocery } from "../../types/Grocery";
 import PurchaseCheckItem from "../PurchaseCheckItem";
 import { Variables } from "../../styles/variables";
@@ -8,10 +10,28 @@ interface PurchaseCheckListProps {
     data: Grocery[];
     addToList: boolean,
     reload: () => void;
+    filter?: string
 }
 
-const PurchaseCheckList: React.FC<PurchaseCheckListProps> = ({ data, addToList, reload }) => {
+const PurchaseCheckList: React.FC<PurchaseCheckListProps> = ({ data, addToList, reload, filter }) => {
     const variables = Variables();
+
+    async function handleAddGrocery() {
+        if (filter) {
+            const grocery = await insertGrocery(filter);
+            if (grocery) {
+                addToPurchaseList(grocery);
+
+                reload();
+            }
+            else {
+                ToastAndroid.show(`Erro ao salvar no Firebase`, ToastAndroid.SHORT);
+            }
+        }
+        else {
+            ToastAndroid.show(`Não é possível adicionar ${filter} na Lista de Compra`, ToastAndroid.SHORT);
+        }
+    }
 
     return (
         <>
@@ -23,7 +43,15 @@ const PurchaseCheckList: React.FC<PurchaseCheckListProps> = ({ data, addToList, 
                         keyExtractor={(item) => item.id as string}
                     />
                     :
-                    <Text style={{ color: variables.TEXT_COLOR, fontSize: variables.FONT_SIZE_MEDIUM }}>Não há itens na sua Lista de Compras.</Text>
+                    <>
+                        {filter && filter.length > 0 ?
+                            <TouchableHighlight onPress={handleAddGrocery}>
+                                <Text style={{ color: variables.PRIMARY_COLOR, fontSize: variables.FONT_SIZE_MEDIUM }}>Gostaria de adicionar {filter}?</Text>
+                            </TouchableHighlight>
+                            :
+                            <Text style={{ color: variables.TEXT_COLOR, fontSize: variables.FONT_SIZE_MEDIUM }}>Não há itens na sua Lista de Compras.</Text>
+                        }
+                    </>
             }
 
         </>

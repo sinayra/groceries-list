@@ -14,7 +14,7 @@ import {
 import { Grocery, Purchase } from "../../types/Grocery";
 import PurchaseList from "../../components/PurchaseList";
 import { Variables } from "../../styles/variables";
-import { getPurchases, deleteGroceries } from "../../services/database";
+import { getPurchases, deleteGrocery } from "../../services/database";
 
 interface RouteParams {
   item: Grocery;
@@ -61,7 +61,7 @@ export default function Detail() {
   }, [purchases]);
 
   async function handleDeleteGrocery() {
-    const result = await deleteGroceries(id as string);
+    const result = await deleteGrocery(id as string);
 
     if (result === 200) {
       ToastAndroid.show("Compra deletada com sucesso", ToastAndroid.SHORT);
@@ -70,7 +70,7 @@ export default function Detail() {
   }
 
   async function handleDeleteHistory(idPurchase: string | undefined) {
-    const result = await deleteGroceries(id as string, idPurchase as string);
+    const result = await deleteGrocery(id as string, idPurchase as string);
 
     if (result === 200) {
       ToastAndroid.show("Compra deletada com sucesso", ToastAndroid.SHORT);

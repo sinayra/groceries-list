@@ -16,7 +16,7 @@ import AutoComplete from "../../components/AutoComplete";
 import styles from "./styles";
 import { displayShortDate } from "../../utils/date";
 import { Variables } from "../../styles/variables";
-import { setGroceries } from "../../services/database";
+import { insertGroceryHistory } from "../../services/database";
 
 interface RouteParams {
   name?: string;
@@ -65,7 +65,7 @@ export default function Grocery() {
 
   async function handleSavePurchase() {
     if (isRequiredFieldsFilled()) {
-      const result = await setGroceries(id, name, date, price, quantity);
+      const result = await insertGroceryHistory(id, name, date, price, quantity);
 
       if (result === 200) {
         ToastAndroid.show("Compra salva com sucesso", ToastAndroid.SHORT);
