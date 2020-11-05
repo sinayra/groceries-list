@@ -17,7 +17,7 @@ export default function Login() {
   const [showLogin, setShowLogin] = useState(false);
 
   function logInSuccess() {
-    navigation.navigate("Home");
+    navigation.navigate("Menu", {screen: "Home"});
   }
 
   useEffect(() => {

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, SafeAreaView, TextInput, ToastAndroid } from "react-native";
+import { View, SafeAreaView, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import GroceryList from "../../components/GroceryList";
-import Menu from "../../components/Menu";
 import styles from "./styles";
 
 import { getGroceries } from "../../services/database";
@@ -22,7 +21,6 @@ export default function Home() {
     setFilter("");
 
     if (result) {
-      ToastAndroid.show("Firebase carregado com sucesso", ToastAndroid.SHORT);
       setProductsList(result);
       setFilteredList(result);
     }
@@ -69,7 +67,6 @@ export default function Home() {
 
         <GroceryList data={filteredList} filter={filter} />
       </View>
-      <Menu focus="Home" />
     </SafeAreaView>
   );
 }

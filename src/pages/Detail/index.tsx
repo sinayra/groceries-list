@@ -65,7 +65,7 @@ export default function Detail() {
 
     if (result === 200) {
       ToastAndroid.show("Compra deletada com sucesso", ToastAndroid.SHORT);
-      navigation.navigate("Home");
+      navigation.navigate("Menu", {screen: "Home"});
     }
   }
 

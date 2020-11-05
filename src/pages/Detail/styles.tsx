@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     paddingTop: 20 + Constants.statusBarHeight,
-    paddingBottom: 20 + Constants.statusBarHeight,
+    paddingBottom: Constants.statusBarHeight,
     paddingLeft: 10,
     paddingRight: 10,
     justifyContent: "space-between",
