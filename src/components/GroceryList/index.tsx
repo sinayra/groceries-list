@@ -16,7 +16,7 @@ const GroceryList: React.FC<GroceryListProps> = ({ data, filter }) => {
   const navigation = useNavigation();
 
   function handleAddPurchase() {
-    navigation.navigate("Menu", {screen: "Grocery", name: filter});
+    navigation.navigate("Menu", { screen: "Grocery", params: { name: filter } });
   }
 
   return (
