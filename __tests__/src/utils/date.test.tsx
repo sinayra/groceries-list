@@ -1,6 +1,4 @@
-import React from 'react';
 import { displayCompleteDate, displayShortDate, isValidDate } from "../../../src/utils/date"
-
 
 describe('Date', () => {
     describe('isValidDate', () => {
