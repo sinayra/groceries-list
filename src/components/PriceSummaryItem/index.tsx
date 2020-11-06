@@ -14,7 +14,11 @@ import {
 import { Variables } from "../../styles/variables";
 import { Grocery } from "../../types/Grocery";
 
-const PriceSummaryItem = ({ item }: { item: Grocery }) => {
+interface PriceSummaryItemProps {
+  item: Grocery;
+}
+
+const PriceSummaryItem: React.FC<PriceSummaryItemProps> = ({ item }) => {
   const variables = Variables();
 
   const { name, purchases } = item;

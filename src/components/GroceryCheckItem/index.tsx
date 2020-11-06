@@ -12,21 +12,27 @@ import styles from "./styles";
 import { Variables } from "../../styles/variables";
 import { Grocery } from "../../types/Grocery";
 
-const GroceryCheckItem = ({ item, addToList, reload }: { item: Grocery, addToList: boolean, reload: () => void }) => {
+interface GroceryCheckItemProps {
+    item: Grocery;
+    addToList: boolean;
+    reload: () => void;
+}
+
+const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, addToList, reload }) => {
     const variables = Variables();
     const [check] = useState(!addToList);
     const [price, setPrice] = useState(0);
 
     const { name } = item;
 
-    function calculatePrice(quantity?: number){
+    function calculatePrice(quantity?: number) {
         const purchaseHistory = createPaidPrice(item.purchases);
         const mode = calculateThresholdMode(purchaseHistory, 0.1);
 
         if (quantity && quantity > 0) {
             setPrice(mode * quantity);
         }
-        else{
+        else {
             setPrice(mode);
         }
     }
