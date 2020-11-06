@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import GroceryList from "../../components/GroceryList";
+import PriceSummaryList from "../../components/PriceSummaryList";
 import styles from "./styles";
 
 import { getGroceries } from "../../services/database";
@@ -65,7 +65,7 @@ export default function Home() {
           placeholderTextColor={variables.BORDER_COLOR}
         />
 
-        <GroceryList data={filteredList} filter={filter} />
+        <PriceSummaryList data={filteredList} filter={filter} />
       </View>
     </SafeAreaView>
   );

@@ -1,16 +1,16 @@
 import React from "react";
 import { FlatList, Text } from "react-native";
 import { Purchase } from "../../types/Grocery";
-import PurchaseItem from "../PurchaseItem";
+import PurchaseHistoryItem from "../PurchaseHistoryItem";
 import { Variables } from "../../styles/variables";
 import styles from "./styles";
 
-interface PurchaseListPropsProps {
+interface PurchaseHistoryListProps {
   createAlert: (message: string, idPurchase: string|undefined) => void;
   purchases: Purchase[];
 }
 
-const PurchaseList: React.FC<PurchaseListPropsProps> = ({
+const PurchaseHistoryList: React.FC<PurchaseHistoryListProps> = ({
   createAlert,
   purchases,
 }) => {
@@ -25,7 +25,7 @@ const PurchaseList: React.FC<PurchaseListPropsProps> = ({
       <FlatList
         data={purchases}
         renderItem={({ item }: { item: Purchase}) => (
-          <PurchaseItem item={item} idPurchase={item.id} createAlert={createAlert} />
+          <PurchaseHistoryItem item={item} idPurchase={item.id} createAlert={createAlert} />
         )}
         keyExtractor={(item, index) => item.id as string}
       />
@@ -33,4 +33,4 @@ const PurchaseList: React.FC<PurchaseListPropsProps> = ({
   );
 };
 
-export default PurchaseList;
+export default PurchaseHistoryList;

@@ -3,17 +3,17 @@ import { FlatList, Text, TouchableHighlight, ToastAndroid } from "react-native";
 
 import { addToPurchaseList, insertGrocery } from "../../services/database";
 import { Grocery } from "../../types/Grocery";
-import PurchaseCheckItem from "../PurchaseCheckItem";
+import GroceryCheckItem from "../GroceryCheckItem";
 import { Variables } from "../../styles/variables";
 
-interface PurchaseCheckListProps {
+interface GroceryCheckListProps {
     data: Grocery[];
     addToList: boolean,
     reload: () => void;
     filter?: string
 }
 
-const PurchaseCheckList: React.FC<PurchaseCheckListProps> = ({ data, addToList, reload, filter }) => {
+const GroceryCheckList: React.FC<GroceryCheckListProps> = ({ data, addToList, reload, filter }) => {
     const variables = Variables();
 
     async function handleAddGrocery() {
@@ -39,7 +39,7 @@ const PurchaseCheckList: React.FC<PurchaseCheckListProps> = ({ data, addToList, 
                 data.length > 0 ?
                     <FlatList
                         data={data}
-                        renderItem={({ item, index }: { item: Grocery, index: number }) => <PurchaseCheckItem item={item} addToList={addToList} reload={reload} />}
+                        renderItem={({ item, index }: { item: Grocery, index: number }) => <GroceryCheckItem item={item} addToList={addToList} reload={reload} />}
                         keyExtractor={(item) => item.id as string}
                     />
                     :
@@ -58,4 +58,4 @@ const PurchaseCheckList: React.FC<PurchaseCheckListProps> = ({ data, addToList, 
     );
 };
 
-export default PurchaseCheckList;
+export default GroceryCheckList;

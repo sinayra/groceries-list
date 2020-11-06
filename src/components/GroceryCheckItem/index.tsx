@@ -12,7 +12,7 @@ import styles from "./styles";
 import { Variables } from "../../styles/variables";
 import { Grocery } from "../../types/Grocery";
 
-const PurchaseCheckItem = ({ item, addToList, reload }: { item: Grocery, addToList: boolean, reload: () => void }) => {
+const GroceryCheckItem = ({ item, addToList, reload }: { item: Grocery, addToList: boolean, reload: () => void }) => {
     const variables = Variables();
     const [check] = useState(!addToList);
     const [price, setPrice] = useState(0);
@@ -112,4 +112,4 @@ const PurchaseCheckItem = ({ item, addToList, reload }: { item: Grocery, addToLi
     );
 };
 
-export default PurchaseCheckItem;
+export default GroceryCheckItem;

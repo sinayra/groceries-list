@@ -15,7 +15,7 @@ import {
 } from "../../utils/purchaseMath";
 
 import { Grocery, Purchase } from "../../types/Grocery";
-import PurchaseList from "../../components/PurchaseList";
+import PurchaseHistoryList from "../../components/PurchaseHistoryList";
 import { Variables } from "../../styles/variables";
 import { getPurchases, deleteGrocery, editGrocery } from "../../services/database";
 
@@ -180,7 +180,7 @@ export default function Detail() {
             </View>
           </View>
         </View>
-        <PurchaseList createAlert={showDeleteMessage} purchases={purchases} />
+        <PurchaseHistoryList createAlert={showDeleteMessage} purchases={purchases} />
       </View>
       <RectButton
         style={{

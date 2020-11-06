@@ -22,7 +22,7 @@ interface RouteParams {
   name?: string;
 }
 
-export default function Grocery() {
+export default function AddPurchase() {
   const variables = Variables();
 
   const route = useRoute();

@@ -8,13 +8,13 @@ import { displayCompleteDate, displayShortDate } from "../../utils/date";
 import { Variables } from "../../styles/variables";
 import { Purchase } from "../../types/Grocery";
 
-interface PurchaseItemPropsProps {
+interface PurchaseHistoryItemProps {
   createAlert: (message: string, idPurchase: string|undefined) => void;
   item: Purchase;
   idPurchase: string|undefined;
 }
 
-const PurchaseItem: React.FC<PurchaseItemPropsProps> = ({
+const PurchaseHistoryItem: React.FC<PurchaseHistoryItemProps> = ({
   item,
   idPurchase,
   createAlert,
@@ -56,4 +56,4 @@ const PurchaseItem: React.FC<PurchaseItemPropsProps> = ({
   );
 };
 
-export default PurchaseItem;
+export default PurchaseHistoryItem;

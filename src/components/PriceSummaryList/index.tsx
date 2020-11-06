@@ -3,20 +3,20 @@ import { FlatList, Text } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Grocery } from "../../types/Grocery";
-import GroceryItem from "../GroceryItem";
+import PriceSummaryItem from "../PriceSummaryItem";
 import { Variables } from "../../styles/variables";
 
-interface GroceryListProps {
+interface PriceSumaryListProps {
   data: Grocery[];
   filter: string;
 }
 
-const GroceryList: React.FC<GroceryListProps> = ({ data, filter }) => {
+const PriceSummaryList: React.FC<PriceSumaryListProps> = ({ data, filter }) => {
   const variables = Variables();
   const navigation = useNavigation();
 
   function handleAddPurchase() {
-    navigation.navigate("Menu", { screen: "Grocery", params: { name: filter } });
+    navigation.navigate("Menu", { screen: "AddPurchase", params: { name: filter } });
   }
 
   return (
@@ -25,7 +25,7 @@ const GroceryList: React.FC<GroceryListProps> = ({ data, filter }) => {
         data.length > 0 ?
           <FlatList
             data={data}
-            renderItem={({ item }: { item: Grocery }) => <GroceryItem item={item} />}
+            renderItem={({ item }: { item: Grocery }) => <PriceSummaryItem item={item} />}
             keyExtractor={(item) => item.id as string}
           />
           :
@@ -39,4 +39,4 @@ const GroceryList: React.FC<GroceryListProps> = ({ data, filter }) => {
   );
 };
 
-export default GroceryList;
+export default PriceSummaryList;

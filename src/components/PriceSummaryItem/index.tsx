@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 
-import styles from "./styles";
+import styles from "./styles"
 import {
   calculateMin,
   calculateMax,
@@ -14,7 +14,7 @@ import {
 import { Variables } from "../../styles/variables";
 import { Grocery } from "../../types/Grocery";
 
-const GroceryItem = ({ item }: { item: Grocery }) => {
+const PriceSummaryItem = ({ item }: { item: Grocery }) => {
   const variables = Variables();
 
   const { name, purchases } = item;
@@ -91,4 +91,4 @@ const GroceryItem = ({ item }: { item: Grocery }) => {
   );
 };
 
-export default GroceryItem;
+export default PriceSummaryItem;

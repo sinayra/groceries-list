@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, TextInput, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import PurchaseCheckList from "../../components/PurchaseCheckList";
+import GroceryCheckList from "../../components/GroceryCheckList";
 import styles from "./styles";
 
 import { getGroceries, getPurchaseList } from "../../services/database";
@@ -105,7 +105,7 @@ export default function List() {
                 }}
             >
                 <Text style={{ fontSize: variables.FONT_SIZE_SMALL, color: variables.TEXT_COLOR }}>Há {purchaseList.length} itens na Lista de Compras. </Text>
-                <PurchaseCheckList data={purchaseList} addToList={false} reload={loadPurchaseArray} />
+                <GroceryCheckList data={purchaseList} addToList={false} reload={loadPurchaseArray} />
             </View>
             <View
                 style={{
@@ -134,7 +134,7 @@ export default function List() {
                     placeholderTextColor={variables.BORDER_COLOR}
                 />
 
-                <PurchaseCheckList data={filteredList} addToList={true} reload={loadPurchaseArray} filter={filter} />
+                <GroceryCheckList data={filteredList} addToList={true} reload={loadPurchaseArray} filter={filter} />
             </View>
 
         </SafeAreaView>

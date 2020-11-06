@@ -9,7 +9,7 @@ import DarkTheme from "./styles/DarkTheme";
 import DefaultTheme from "./styles/DefaultTheme";
 
 import Home from "./pages/Home";
-import Grocery from "./pages/Grocery";
+import AddPurchase from "./pages/AddPurchase";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import List from "./pages/List";
@@ -28,7 +28,7 @@ const Menu = () => {
 
         if (route.name === 'Home') {
           iconName = focused ? 'home-circle' : 'home';
-        } else if (route.name === 'Grocery') {
+        } else if (route.name === 'AddPurchase') {
           iconName = focused ? 'plus-circle' : 'plus';
         }
         else if (route.name === 'List') {
@@ -45,7 +45,7 @@ const Menu = () => {
       }}>
       <Tab.Screen name="List" component={List} options={{ tabBarLabel: "Lista de compras" }} />
       <Tab.Screen name="Home" component={Home} options={{ tabBarLabel: "Início" }} />
-      <Tab.Screen name="Grocery" component={Grocery} options={{ tabBarLabel: "Adicionar" }} />
+      <Tab.Screen name="AddPurchase" component={AddPurchase} options={{ tabBarLabel: "Adicionar" }} />
     </Tab.Navigator>
   );
 }
