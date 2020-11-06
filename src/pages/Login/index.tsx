@@ -17,16 +17,16 @@ export default function Login() {
   const [showLogin, setShowLogin] = useState(false);
 
   function logInSuccess() {
-    navigation.navigate("Menu", {screen: "Home"});
+    navigation.navigate("Menu", { screen: "Home" });
   }
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user: any) => {
       if (user) {
         setShowLogin(false);
         logInSuccess();
       }
-      else{
+      else {
         setShowLogin(true);
       }
     });
@@ -44,7 +44,7 @@ export default function Login() {
         await firebase
           .auth()
           .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-          
+
         const credential = firebase.auth.GoogleAuthProvider.credential(
           result.idToken,
           result.accessToken
