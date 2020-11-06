@@ -69,3 +69,8 @@ yarn.lock
 #config
 src/config/keys.json
 google-services.json
+
+# Jest
+#
+.jest/
+coverage/
