@@ -37,6 +37,7 @@
     "@types/react-native-dialog": "^5.6.2",
     "@types/react-test-renderer": "^16.9.3",
     "jest-expo": "^39.0.0",
+    "make-coverage-badge": "^1.2.0",
     "react-test-renderer": "^17.0.1",
     "typescript": "~4.0.5"
   },
@@ -48,12 +49,16 @@
     "eject": "expo eject",
     "update:packages": "npm audit fix -f && npm-check-updates -u && npm update && npm install",
     "test": "jest",
-    "test:coverage": "jest --verbose --updateSnapshot --watch --coverage && open ./coverage/lcov-report/index.html"
+    "test:coverage": "jest --verbose --coverage ",
+    "test:badges": "npm run test:coverage && make-coverage-badge --output-path ./badges/coverage.svg"
   },
   "jest": {
     "preset": "jest-expo",
     "setupFiles": [
       "<rootDir>jest/setup.js"
+    ],
+    "coverageReporters": [
+      "json-summary"
     ]
   },
   "private": true
