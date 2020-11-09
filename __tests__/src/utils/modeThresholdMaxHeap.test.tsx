@@ -1,4 +1,4 @@
-import { MaxHeap } from "../../../src/utils/modeThresholdMaxHeap"
+import { MaxHeap } from "../../../src/utils/modeThresholdMaxHeap";
 
 describe('ModeThresholdMaxHeap', () => {
 

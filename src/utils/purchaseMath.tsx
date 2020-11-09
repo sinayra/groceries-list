@@ -12,7 +12,7 @@ export function createPricePerUnitArray(purchases: Purchase[]) {
   return pricesPerUnit;
 }
 
-export function createPaidPrice(purchases: Purchase[]) {
+export function createPaidPriceArray(purchases: Purchase[]) {
   const pricesPerUnit = [];
 
   for (const purchase of purchases) {
@@ -43,19 +43,23 @@ export function calculateMode(pricesPerUnit: number[]) {
 
   for (let i = 1; i < pricesPerUnit.length; i++) {
     if (pricesPerUnit[i] != current.value) {
-      if (current.value > best.value) {
-        best = current;
+      
+      if (current.n > best.n) { //before update new current
+        best.value = current.value;
+        best.n = current.n;
       }
 
       current.value = pricesPerUnit[i];
       current.n = 1;
+
     } else {
       current.n++;
     }
   }
 
-  if (current.value > best.value) {
-    best = current;
+  if (current.n > best.n) {
+    best.value = current.value;
+    best.n = current.n;
   }
 
   return best.value;

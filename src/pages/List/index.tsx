@@ -8,7 +8,7 @@ import styles from "./styles";
 import { getGroceries, getPurchaseList } from "../../services/database";
 import { Grocery } from "../../types/Grocery";
 import { Variables } from "../../styles/variables";
-import { createPaidPrice, calculateThresholdMode } from "../../utils/purchaseMath";
+import { createPaidPriceArray, calculateThresholdMode } from "../../utils/purchaseMath";
 
 export default function List() {
     const variables = Variables();
@@ -30,10 +30,10 @@ export default function List() {
         let acc = 0;
 
         purchaseList.forEach((elem) => {
-            const purchaseHistory = createPaidPrice(elem.purchases);
+            const purchaseHistory = createPaidPriceArray(elem.purchases);
             const mode = calculateThresholdMode(purchaseHistory, 0.1);
 
-            if(elem.listQuantity){
+            if(elem.listQuantity && mode){
                 acc += mode * elem.listQuantity;
             }
         });

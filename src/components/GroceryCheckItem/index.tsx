@@ -5,7 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { addToPurchaseList, removeFromPurchaseList, setQuantity } from "../../services/database";
-import { createPaidPrice, calculateThresholdMode } from "../../utils/purchaseMath";
+import { createPaidPriceArray, calculateThresholdMode } from "../../utils/purchaseMath";
 
 import styles from "./styles";
 
@@ -26,14 +26,16 @@ const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, addToList, re
     const { name } = item;
 
     function calculatePrice(quantity?: number) {
-        const purchaseHistory = createPaidPrice(item.purchases);
+        const purchaseHistory = createPaidPriceArray(item.purchases);
         const mode = calculateThresholdMode(purchaseHistory, 0.1);
 
-        if (quantity && quantity > 0) {
-            setPrice(mode * quantity);
-        }
-        else {
-            setPrice(mode);
+        if (mode) {
+            if (quantity && quantity > 0) {
+                setPrice(mode * quantity);
+            }
+            else {
+                setPrice(mode);
+            }
         }
     }
 
