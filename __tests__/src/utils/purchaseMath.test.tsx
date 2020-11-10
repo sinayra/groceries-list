@@ -1,8 +1,7 @@
 import { calculateMode, calculateThresholdMode, calculateMedian, calculateMax, calculateMin, calculateAverage, createPricePerUnitArray, createPaidPriceArray } from "../../../src/utils/purchaseMath";
 import { Purchase } from "../../../src/types/Grocery";
-import { exp } from "react-native-reanimated";
 
-describe.only('Purchase Math', () => {
+describe('Purchase Math', () => {
 
     describe('Calculate mode', () => {
         describe('Multiple elements', () => {
