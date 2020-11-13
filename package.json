@@ -53,7 +53,7 @@
     "eject": "expo eject",
     "update:packages": "npm audit fix -f && npm-check-updates -u && npm update && npm install",
     "test": "jest",
-    "test:coverage": "jest --verbose --coverage ",
+    "test:coverage": "jest --verbose --coverage",
     "test:badges": "npm run test:coverage && make-coverage-badge --output-path ./badges/coverage.svg"
   },
   "jest": {
@@ -68,10 +68,15 @@
       "<rootDir>jest/setupFilesAfterEnv.js"
     ],
     "coverageReporters": [
+      "lcov",
+      "text-summary",
       "json-summary"
     ],
     "collectCoverageFrom": [
       "**/*.{ts,tsx,js,jsx}",
+      "!**/styles.tsx",
+      "!**/src/styles/**",
+      "!**/src/types/**",
       "!**/coverage/**",
       "!**/node_modules/**",
       "!**/babel.config.js",
