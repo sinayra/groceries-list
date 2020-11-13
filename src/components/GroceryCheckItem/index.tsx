@@ -14,13 +14,13 @@ import { Grocery } from "../../types/Grocery";
 
 interface GroceryCheckItemProps {
     item: Grocery;
-    addToList: boolean;
+    canBeAddedToList: boolean;
     reload: () => void;
 }
 
-const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, addToList, reload }) => {
+const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, canBeAddedToList, reload }) => {
     const variables = Variables();
-    const [check] = useState(!addToList);
+    const [check] = useState(item.listId ? true : false);
     const [price, setPrice] = useState(0);
 
     const { name } = item;
@@ -75,7 +75,7 @@ const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, addToList, re
     }
 
     return (
-        <View style={{ ...styles.container, opacity: addToList ? 0.5 : 1 }}>
+        <View style={{ ...styles.container, opacity: canBeAddedToList ? 0.5 : 1 }}>
             <View style={styles.checkbox}>
                 <CheckBox
                     disabled={false}
@@ -98,7 +98,7 @@ const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, addToList, re
                 </View>
             </View>
 
-            {addToList === false &&
+            {canBeAddedToList === false &&
                 <View style={styles.quantity}>
                     <TouchableOpacity onPress={() => handleQuantity(true)}>
                         <FontAwesome name="plus-circle" size={variables.FONT_SIZE_LARGE + 10} color={variables.TEXT_COLOR} />

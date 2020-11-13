@@ -8,6 +8,7 @@ import styles from "./styles";
 import { getGroceries } from "../../services/database";
 import { Grocery } from "../../types/Grocery";
 import { Variables } from "../../styles/variables";
+import SearchGroceryInput from "../../components/SearchGroceryInput";
 
 export default function Home() {
   const variables = Variables();
@@ -18,7 +19,6 @@ export default function Home() {
 
   async function loadFromDatabase() {
     const result = await getGroceries();
-    setFilter("");
 
     if (result) {
       setProductsList(result);
@@ -26,24 +26,19 @@ export default function Home() {
     }
   }
 
+  function hangleChangeFilterValue(value: string){
+    setFilter(value);
+  }
+
+  function handleChangeFilteredList(value: Grocery[]){
+    setFilteredList(value);
+  }
+
   useEffect(() => {
     navigation.addListener("focus", () => {
       loadFromDatabase();
     });
   }, []);
-
-  useEffect(() => {
-    if (productsList && filter.length > 0) {
-      const filterLower = filter.toLowerCase();
-      const filtered = productsList.filter((p) =>
-        p.name.toLowerCase().includes(filterLower)
-      );
-
-      setFilteredList(filtered);
-    } else {
-      setFilteredList(productsList);
-    }
-  }, [filter]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -53,17 +48,7 @@ export default function Home() {
           backgroundColor: variables.BACKGROUND_COLOR,
         }}
       >
-        <TextInput
-          style={{
-            ...styles.input,
-            backgroundColor: variables.CARD_COLOR,
-            color: variables.TEXT_COLOR,
-          }}
-          value={filter}
-          onChangeText={(filter) => setFilter(filter)}
-          placeholder="Pesquisar..."
-          placeholderTextColor={variables.BORDER_COLOR}
-        />
+        <SearchGroceryInput list={productsList} onChangeFilter={handleChangeFilteredList} onChangeValue={hangleChangeFilterValue} />
 
         <PriceSummaryList data={filteredList} filter={filter} />
       </View>

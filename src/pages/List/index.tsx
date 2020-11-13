@@ -9,6 +9,7 @@ import { getGroceries, getPurchaseList } from "../../services/database";
 import { Grocery } from "../../types/Grocery";
 import { Variables } from "../../styles/variables";
 import { createPaidPriceArray, calculateThresholdMode } from "../../utils/purchaseMath";
+import SearchGroceryInput from "../../components/SearchGroceryInput";
 
 export default function List() {
     const variables = Variables();
@@ -44,15 +45,16 @@ export default function List() {
     async function loadFromDatabase() {
         const groceries = await getGroceries();
         const list = await getPurchaseList();
-        setFilter("");
 
-        if (groceries && list.length === 0) {
+        if (groceries) {
             setProductsList(groceries);
             setFilteredList(groceries);
-
         }
 
-        loadPurchaseArray();
+        if(list){
+            setPurchaseList(list);
+        }
+
     }
 
     useEffect(() => {
@@ -63,38 +65,14 @@ export default function List() {
         loadFromDatabase();
     }, []);
 
-    async function loadPurchaseArray() {
-        let groceries = await getGroceries();
-        const list = await getPurchaseList();
-        setFilter("");
 
-        if (list) {
-            setPurchaseList(list);
-
-            for (const item of list) {
-                if (item.id) {
-                    groceries = groceries.filter(grocery => grocery.id !== item.id);
-                }
-            }
-
-            setFilteredList(groceries);
-            setProductsList(groceries);
-        }
-    }
-
-
-    useEffect(() => {
-        if (productsList && filter.length > 0) {
-            const filterLower = filter.toLowerCase();
-            const filtered = productsList.filter((p) =>
-                p.name.toLowerCase().includes(filterLower)
-            );
-
-            setFilteredList(filtered);
-        } else {
-            setFilteredList(productsList);
-        }
-    }, [filter]);
+    function handleChangeFilter(value: string){
+        setFilter(value);
+      }
+    
+      function handleChangeFilteredList(value: Grocery[]){
+        setFilteredList(value);
+      }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -105,7 +83,7 @@ export default function List() {
                 }}
             >
                 <Text style={{ fontSize: variables.FONT_SIZE_SMALL, color: variables.TEXT_COLOR }}>Há {purchaseList.length} itens na Lista de Compras. </Text>
-                <GroceryCheckList data={purchaseList} addToList={false} reload={loadPurchaseArray} />
+                <GroceryCheckList showList={purchaseList} canBeAddedToList={false} reload={loadFromDatabase} />
             </View>
             <View
                 style={{
@@ -122,19 +100,9 @@ export default function List() {
                     backgroundColor: variables.BACKGROUND_COLOR,
                 }}
             >
-                <TextInput
-                    style={{
-                        ...styles.input,
-                        backgroundColor: variables.CARD_COLOR,
-                        color: variables.TEXT_COLOR,
-                    }}
-                    value={filter}
-                    onChangeText={(filter) => setFilter(filter)}
-                    placeholder="Pesquisar..."
-                    placeholderTextColor={variables.BORDER_COLOR}
-                />
+                <SearchGroceryInput list={productsList} onChangeValue={handleChangeFilter} onChangeFilter={handleChangeFilteredList} />
 
-                <GroceryCheckList data={filteredList} addToList={true} reload={loadPurchaseArray} filter={filter} />
+                <GroceryCheckList showList={filteredList} purchaseList={purchaseList} canBeAddedToList={true} reload={loadFromDatabase} filter={filter} />
             </View>
 
         </SafeAreaView>

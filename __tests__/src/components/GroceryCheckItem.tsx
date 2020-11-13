@@ -25,7 +25,7 @@ describe('<AutoComplete />', () => {
       const reload: () => void = () => { };
       const addToList = false;
 
-      const component = shallow(<GroceryCheckItem item={item} addToList={addToList} reload={reload} />);
+      const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
       const text = component.find(Text).getElements();
 
@@ -54,7 +54,7 @@ describe('<AutoComplete />', () => {
       const reload: () => void = () => { };
       const addToList = false;
 
-      const component = shallow(<GroceryCheckItem item={item} addToList={addToList} reload={reload} />);
+      const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
       const text = component.find(Text).getElements();
 
@@ -79,7 +79,7 @@ describe('<AutoComplete />', () => {
       const reload: () => void = () => { };
       const addToList = false;
 
-      const component = shallow(<GroceryCheckItem item={item} addToList={addToList} reload={reload} />);
+      const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
       const text = component.find(Text).getElements();
 
@@ -108,7 +108,7 @@ describe('<AutoComplete />', () => {
       const reload: () => void = () => { };
       const addToList = true;
 
-      const component = shallow(<GroceryCheckItem item={item} addToList={addToList} reload={reload} />);
+      const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
       const text = component.find(Text).getElements();
 
@@ -129,7 +129,7 @@ describe('<AutoComplete />', () => {
       const reload: () => void = () => { };
       const addToList = true;
 
-      const component = shallow(<GroceryCheckItem item={item} addToList={addToList} reload={reload} />);
+      const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
       const text = component.find(Text).getElements();
 

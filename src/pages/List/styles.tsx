@@ -20,14 +20,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end"
   },
-  input: {
-    height: 54,
-    color: "white",
-    justifyContent: "center",
-    paddingHorizontal: 16,
-    marginTop: 4,
-    marginBottom: 16,
-  },
 });
 
 export default styles;
