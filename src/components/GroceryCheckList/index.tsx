@@ -92,7 +92,7 @@ const GroceryCheckList: React.FC<GroceryCheckListProps> = ({ showList, purchaseL
                 </View>);
 
             default:
-                return (<Text style={{ color: variables.TEXT_COLOR, fontSize: variables.FONT_SIZE_MEDIUM }}>Não há itens na sua Lista.</Text>)
+                return (<Text style={{ color: variables.TEXT_COLOR, fontSize: variables.FONT_SIZE_MEDIUM }}>Não há itens na sua Lista.</Text>);
 
         }
 
