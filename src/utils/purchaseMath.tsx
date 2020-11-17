@@ -25,8 +25,8 @@ export function createPaidPriceArray(purchases: Purchase[]) {
 }
 
 export function calculateMode(pricesPerUnit: number[]) {
-  
-  if(pricesPerUnit.length === 0){
+
+  if (pricesPerUnit.length === 0) {
     return 0;
   }
 
@@ -43,7 +43,7 @@ export function calculateMode(pricesPerUnit: number[]) {
 
   for (let i = 1; i < pricesPerUnit.length; i++) {
     if (pricesPerUnit[i] != current.value) {
-      
+
       if (current.n > best.n) { //before update new current
         best.value = current.value;
         best.n = current.n;
@@ -71,7 +71,7 @@ export function calculateThresholdMode(
 ) {
   const thresholdPrices = new MaxHeap();
 
-  if(pricesPerUnit.length === 0){
+  if (pricesPerUnit.length === 0) {
     return 0;
   }
   pricesPerUnit.sort();
@@ -105,21 +105,15 @@ export function calculateThresholdMode(
 
 export function calculateMedian(pricesPerUnit: number[]) {
   let median = 0;
-  
-  if(pricesPerUnit.length === 0){
+
+  if (pricesPerUnit.length === 0) {
     return 0;
   }
 
-  const halfIndex = Math.round(pricesPerUnit.length / 2);
+  const halfIndex = Math.ceil(pricesPerUnit.length / 2);
 
-  if (halfIndex > 0) {
-    pricesPerUnit.sort();
-    median = pricesPerUnit[halfIndex - 1];
-  } else {
-    if (pricesPerUnit.length === 1) {
-      median = pricesPerUnit[0];
-    }
-  }
+  pricesPerUnit.sort();
+  median = pricesPerUnit[halfIndex - 1];
 
   return median;
 }
@@ -127,7 +121,7 @@ export function calculateMedian(pricesPerUnit: number[]) {
 export function calculateMax(pricesPerUnit: number[]) {
   let max = 0;
 
-  if(pricesPerUnit.length === 0){
+  if (pricesPerUnit.length === 0) {
     return 0;
   }
 
@@ -143,7 +137,7 @@ export function calculateMax(pricesPerUnit: number[]) {
 export function calculateMin(pricesPerUnit: number[]) {
   let min = Number.MAX_SAFE_INTEGER;
 
-  if(pricesPerUnit.length === 0){
+  if (pricesPerUnit.length === 0) {
     return 0;
   }
 
@@ -158,7 +152,7 @@ export function calculateMin(pricesPerUnit: number[]) {
 
 export function calculateAverage(pricesPerUnit: number[]) {
 
-  if(pricesPerUnit.length === 0){
+  if (pricesPerUnit.length === 0) {
     return 0;
   }
 

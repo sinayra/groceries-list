@@ -228,13 +228,13 @@ describe('Date', () => {
         describe('Handle invalid', () => {
             it('Inf-', () => {
                 const milliseconds = Number.MIN_SAFE_INTEGER;
-                const calculated = displayCompleteDate(milliseconds);
+                const calculated = displayShortDate(milliseconds);
                 expect(calculated).toBe("");
             });
 
             it('Inf+', () => {
                 const milliseconds = Number.MIN_SAFE_INTEGER;
-                const calculated = displayCompleteDate(milliseconds);
+                const calculated = displayShortDate(milliseconds);
                 expect(calculated).toBe("");
             });
 
