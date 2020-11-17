@@ -53,7 +53,7 @@
     "eject": "expo eject",
     "update:packages": "npm audit fix -f && npm-check-updates -u && npm update && npm install",
     "test": "jest",
-    "test:coverage": "jest --verbose --coverage",
+    "test:coverage": "jest --verbose --coverage --watchAll",
     "test:badges": "npm run test:coverage && make-coverage-badge --output-path ./badges/coverage.svg"
   },
   "jest": {
@@ -81,7 +81,8 @@
       "!**/node_modules/**",
       "!**/babel.config.js",
       "!**/jest.setup.js"
-    ]
+    ],
+    "verbose": true
   },
   "private": true
 }
