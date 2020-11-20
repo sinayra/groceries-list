@@ -5,16 +5,16 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   prices: {
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      borderRadius: 10,
-      marginTop: 8,
-      paddingVertical: 10,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    borderRadius: 10,
+    marginTop: 8,
+    paddingVertical: 10,
   },
   priceItem: {
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center"
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
   price: {
     fontFamily: "Roboto_400Regular"
@@ -22,9 +22,29 @@ const styles = StyleSheet.create({
   starPrice: {
     fontFamily: "Roboto_500Medium"
   },
+  titleText: {
+    fontFamily: "Ubuntu_700Bold",
+    flex: 1
+  },
+  titleIcon: {
+    paddingRight: 5,
+  },
   title: {
-    fontFamily: "Ubuntu_700Bold"
+    flexDirection: "row"
+  },
+  purchaseList: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingTop: 10
+  },
+  buttonBox_vertical: {
+    flexDirection: "column",
+    height: 46 * 3
+  },
+  buttonBox__separator_vertical: {
+    width: "100%",
+    height: 0.5
   }
 });
 
-  export default styles;
+export default styles;

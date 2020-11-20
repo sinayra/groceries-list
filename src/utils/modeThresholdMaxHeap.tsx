@@ -13,7 +13,7 @@ export class MaxHeap {
 
   getMax() {
     /* Accessing the max element at index 1 in the heap array */
-    return this.heap.length > 1 ? this.heap[1].value : undefined;
+    return this.heap.length > 1 ? this.heap[1].value : 0;
   }
 
   insert(value: number, n: number) {

@@ -44,12 +44,12 @@ const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, canBeAddedToL
     }, []);
 
 
-    function handleAddToList(value: boolean) {
+    async function handleAddToList(value: boolean) {
         if (value === true) {
-            addToPurchaseList(item.id);
+            await addToPurchaseList(item.id);
         }
         else {
-            removeFromPurchaseList(item.listId);
+            await removeFromPurchaseList(item.listId);
         }
 
         reload();

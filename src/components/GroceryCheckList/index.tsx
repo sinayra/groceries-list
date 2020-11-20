@@ -18,7 +18,6 @@ const GroceryCheckList: React.FC<GroceryCheckListProps> = ({ showList, purchaseL
     const variables = Variables();
     const [data, setData] = useState<Grocery[]>(showList);
     const [emptyMessageOption, setEmptyMessageOption] = useState<"EXISTE" | "ADICIONAR" | "NAO EXISTE">();
-    const [emptyMessage, setEmptyMessage] = useState();
 
     async function handleAddGrocery() {
         if (filter) {
@@ -103,6 +102,7 @@ const GroceryCheckList: React.FC<GroceryCheckListProps> = ({ showList, purchaseL
             {
                 data.length > 0 ?
                     <FlatList
+                        updateCellsBatchingPeriod={1000}
                         data={data}
                         renderItem={({ item, index }: { item: Grocery, index: number }) => <GroceryCheckItem item={item} canBeAddedToList={canBeAddedToList} reload={reload} />}
                         keyExtractor={(item) => item.id as string}

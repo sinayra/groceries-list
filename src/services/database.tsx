@@ -4,13 +4,13 @@ import { Grocery, Purchase } from "../types/Grocery";
 const database = firebase.database();
 
 export async function getGroceries(): Promise<Grocery[]> {
-  const promise: Promise<Grocery[]> = new Promise((resolve, reject) => {
+  const groceryPromise: Promise<Grocery[]> = new Promise((resolve, reject) => {
     database.ref("/groceries").orderByChild("name").on("value", (snapshot) => {
       let groceries: Grocery[] = [];
 
       snapshot.forEach((elemSnapshot) => {
         let purchases: Purchase[] = [];
-        const id = elemSnapshot.key ? elemSnapshot.key : undefined;
+        const groceryId = elemSnapshot.key ? elemSnapshot.key : undefined;
         const name = elemSnapshot.child("name").val();
         const obj = elemSnapshot.child("purchases");
 
@@ -23,14 +23,35 @@ export async function getGroceries(): Promise<Grocery[]> {
           purchases.push({ id, date, price, quantity });
         });
 
-        groceries.push({ id, name, purchases });
+        groceries.push({ id: groceryId, name, purchases });
       });
 
       resolve(groceries);
     });
   });
 
-  return promise;
+  return groceryPromise;
+}
+
+export async function getGroceryPurchaseListInfo(id: string | undefined) {
+  const listPromise: Promise<{ listId: string | undefined, listQuantity: number }> = new Promise((resolve, reject) => {
+
+    if (id !== undefined) {
+      database.ref("/list").orderByChild("id").equalTo(id).limitToFirst(1).on("child_added", (listSnapshop) => {
+        const listId = listSnapshop.key ? listSnapshop.key : undefined;
+        const listQuantity = listSnapshop.child("quantity").val();
+
+        resolve({ listId, listQuantity });
+      });
+    }
+    else {
+      reject(id);
+    }
+
+  });
+
+
+  return listPromise;
 }
 
 export async function getPurchases(id: string): Promise<Purchase[]> {

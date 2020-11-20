@@ -24,6 +24,7 @@ const PriceSummaryList: React.FC<PriceSumaryListProps> = ({ data, filter }) => {
       {
         data.length > 0 ?
           <FlatList
+            updateCellsBatchingPeriod={1000}
             data={data}
             renderItem={({ item }: { item: Grocery }) => <PriceSummaryItem item={item} />}
             keyExtractor={(item) => item.id as string}
