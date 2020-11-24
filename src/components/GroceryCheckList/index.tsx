@@ -102,6 +102,7 @@ const GroceryCheckList: React.FC<GroceryCheckListProps> = ({ showList, purchaseL
             {
                 data.length > 0 ?
                     <FlatList
+                        testID="list"
                         updateCellsBatchingPeriod={1000}
                         data={data}
                         renderItem={({ item, index }: { item: Grocery, index: number }) => <GroceryCheckItem item={item} canBeAddedToList={canBeAddedToList} reload={reload} />}
