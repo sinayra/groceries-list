@@ -27,6 +27,14 @@ describe('<Grocery Check Item />', () => {
   });
 
   describe('Item in the purchase list', () => {
+    let reload: () => void;
+    let addToList: boolean;
+
+    beforeAll(() => {
+      reload = jest.fn();
+      addToList = false;
+    });
+
     it('Load text', async () => {
       const item: Grocery = {
         name: "Sabonete",
@@ -38,8 +46,6 @@ describe('<Grocery Check Item />', () => {
           "quantity": 1
         }]
       }
-      const reload = jest.fn();
-      const addToList = false;
 
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
@@ -67,8 +73,6 @@ describe('<Grocery Check Item />', () => {
           "quantity": 1
         }]
       }
-      const reload = jest.fn();
-      const addToList = false;
 
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
@@ -92,8 +96,6 @@ describe('<Grocery Check Item />', () => {
         listQuantity: 1,
         purchases: []
       }
-      const reload = jest.fn();
-      const addToList = false;
 
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
@@ -121,8 +123,6 @@ describe('<Grocery Check Item />', () => {
           "quantity": 1
         }]
       }
-      const reload = jest.fn();
-      const addToList = false;
 
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
       const checkbox = component.find(CheckBox);
@@ -150,9 +150,7 @@ describe('<Grocery Check Item />', () => {
             "price": 1.34,
             "quantity": 1
           }]
-        }
-        const reload = jest.fn();
-        const addToList = false;
+        };
 
         const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />).find({ testID: "cannotBeAddToList" });
         const icons = component.find(FontAwesome).getElements();
@@ -178,9 +176,7 @@ describe('<Grocery Check Item />', () => {
             "price": 1.34,
             "quantity": 1
           }]
-        }
-        const reload = jest.fn();
-        const addToList = false;
+        };
 
         const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
         const icons = component.find({ testID: "cannotBeAddToList" }).find(TouchableOpacity);
@@ -209,22 +205,20 @@ describe('<Grocery Check Item />', () => {
               "price": 1.34,
               "quantity": 1
             }]
-          }
-          const reload = jest.fn();
-          const addToList = false;
-  
+          };
+
           const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
           const icons = component.find({ testID: "cannotBeAddToList" }).find(TouchableOpacity);
           const sub = icons.find({ testID: "sub" });
-  
+
           const handler = sub.prop("onPress");
-  
+
           if (handler !== undefined) {
             handler(false);
           }
-  
+
           const price = component.find({ testID: "price" }).find(Text).getElement().props.children;
-  
+
           expect(mockQuantity).toBeCalled();
           expect(price).toContain((5.36).toFixed(2));
         });
@@ -239,20 +233,18 @@ describe('<Grocery Check Item />', () => {
               "price": 1.34,
               "quantity": 1
             }]
-          }
-          const reload = jest.fn();
-          const addToList = false;
-  
+          };
+
           const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
           const icons = component.find({ testID: "cannotBeAddToList" }).find(TouchableOpacity);
           const sub = icons.find({ testID: "sub" });
-  
+
           const handler = sub.prop("onPress");
-  
+
           if (handler !== undefined) {
             handler(false);
           }
-    
+
           expect(mockRemove).toBeCalled();
         });
       });
@@ -261,6 +253,14 @@ describe('<Grocery Check Item />', () => {
   });
 
   describe('Item not in the purchase list', () => {
+    let reload: () => void;
+    let addToList: boolean;
+
+    beforeAll(() => {
+      reload = jest.fn();
+      addToList = true;
+    });
+
     it('Load text', async () => {
       const item: Grocery = {
         name: "Sabonete",
@@ -269,9 +269,7 @@ describe('<Grocery Check Item />', () => {
           "price": 1.34,
           "quantity": 1
         }]
-      }
-      const reload = jest.fn();
-      const addToList = true;
+      };
 
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
 
@@ -290,9 +288,7 @@ describe('<Grocery Check Item />', () => {
       const item: Grocery = {
         name: "Sabonete",
         purchases: []
-      }
-      const reload = jest.fn();
-      const addToList = true;
+      };
 
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
       const text = component.find(Text).getElements();
@@ -315,8 +311,6 @@ describe('<Grocery Check Item />', () => {
           "quantity": 1
         }]
       }
-      const reload = jest.fn();
-      const addToList = true;
 
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
       const checkbox = component.find(CheckBox);
@@ -341,9 +335,7 @@ describe('<Grocery Check Item />', () => {
           "price": 1.34,
           "quantity": 1
         }]
-      }
-      const reload = jest.fn();
-      const addToList = true;
+      };
 
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />).find({ testID: "cannotBeAddToList" });
       const icons = component.find(FontAwesome).getElements();
