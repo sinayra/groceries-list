@@ -55,7 +55,7 @@
     "update:packages": "npm audit fix -f && npm-check-updates -u && npm update && npm install",
     "test": "jest",
     "test:coverage": "jest --verbose --coverage --watchAll",
-    "test:badges": "npm run test:coverage && make-coverage-badge --output-path ./badges/coverage.svg"
+    "test:badges": "jest --verbose --coverage && make-coverage-badge --output-path ./badges/coverage.svg"
   },
   "jest": {
     "preset": "jest-expo",
