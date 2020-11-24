@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Text } from 'react-native';
+import { Text, ToastAndroid } from 'react-native';
 
 import GroceryCheckList from "../../../src/components/GroceryCheckList";
 import { Grocery } from "../../../src/types/Grocery";
@@ -9,15 +9,25 @@ import * as database from "../../../src/services/database";
 describe('<Grocery Check List />', () => {
     let mockAddToPurchaseList: jest.SpyInstance<Promise<200 | 500>, [id: string | undefined]>;
     let mockInsertGrocery: jest.SpyInstance<Promise<string | null>, [name: string]>;
+    let mockToastAndroid: jest.SpyInstance<void | null, [message: string, duration: number]>;
 
     beforeEach(() => {
         mockAddToPurchaseList = jest.spyOn(database, 'addToPurchaseList').mockImplementation(jest.fn());
-        mockInsertGrocery = jest.spyOn(database, 'insertGrocery').mockImplementation(jest.fn());
+        mockInsertGrocery = jest.spyOn(database, 'insertGrocery').mockImplementation(() => {
+            const promise = new Promise<string | null>((resolve, reject) => {
+                resolve("foo");
+            });
+
+            return promise;
+        });
+
+        mockToastAndroid = jest.spyOn(ToastAndroid, 'show').mockImplementation(jest.fn());
     });
 
     afterEach(() => {
         mockAddToPurchaseList.mockRestore();
         mockInsertGrocery.mockRestore();
+        mockToastAndroid.mockRestore();
     });
 
     describe('Items already in purchase list', () => {
@@ -207,7 +217,7 @@ describe('<Grocery Check List />', () => {
                 it('has elements to render', () => {
                     const showList: Grocery[] = [
                         {
-                            id:"1",
+                            id: "1",
                             name: "Sabonete",
                             listId: "0",
                             listQuantity: 1,
@@ -276,7 +286,7 @@ describe('<Grocery Check List />', () => {
                 it('does not have elements to render', () => {
                     const showList: Grocery[] = [
                         {
-                            id:"1",
+                            id: "1",
                             name: "Sabonete",
                             listId: "0",
                             listQuantity: 1,
@@ -324,7 +334,7 @@ describe('<Grocery Check List />', () => {
 
                     const purchaseList: Grocery[] = [
                         {
-                            id:"1",
+                            id: "1",
                             name: "Sabonete",
                             listId: "0",
                             listQuantity: 1,
@@ -378,6 +388,137 @@ describe('<Grocery Check List />', () => {
                     expect(text).toBe("Não há itens na sua Lista.");
                 });
 
+                describe('search item by name', () => {
+                    it('already in purchase list', () => {
+                        const showList: Grocery[] = [
+                            {
+                                id: "1",
+                                name: "Sabonete",
+                                listId: "0",
+                                listQuantity: 1,
+                                purchases: [{
+                                    "date": 1599264000000,
+                                    "price": 1.34,
+                                    "quantity": 1
+                                }]
+                            },
+                        ];
+
+                        const purchaseList: Grocery[] = [
+                            {
+                                id: "1",
+                                name: "Sabonete",
+                                listId: "0",
+                                listQuantity: 1,
+                                purchases: [{
+                                    "date": 1599264000000,
+                                    "price": 1.34,
+                                    "quantity": 1
+                                }]
+                            }
+                        ];
+
+                        const filter = "Sabonete";
+
+                        const component = shallow(<GroceryCheckList showList={showList} canBeAddedToList={addToList} reload={reload} purchaseList={purchaseList} filter={filter} />);
+
+                        const list = component.find({ testID: "list" });
+                        const text = component.find(Text).getElements();
+
+                        const name = text[0].props.children;
+                        const message = text[1].props.children;
+
+                        expect(list).toHaveLength(0);
+                        expect(name).toBe(filter);
+                        expect(message).toBe(" já está na Lista de Compras.");
+
+                    });
+
+                    describe('not in purchase list', () => {
+                        it('loads text', () => {
+                            const showList: Grocery[] = [];
+                            const purchaseList: Grocery[] = [];
+                            const filter = "Sabonete";
+
+                            const component = shallow(<GroceryCheckList showList={showList} canBeAddedToList={addToList} reload={reload} purchaseList={purchaseList} filter={filter} />);
+
+                            const list = component.find({ testID: "list" });
+                            const text = component.find(Text).getElements();
+
+                            const name = text[1].props.children;
+                            const message1 = text[0].props.children;
+                            const message2 = text[2].props.children;
+
+                            expect(list).toHaveLength(0);
+                            expect(name).toBe(filter);
+                            expect(message1).toBe("Gostaria de adicionar ");
+                            expect(message2).toBe(" ?");
+
+                        });
+
+                        it('add new item', async () => {
+                            const showList: Grocery[] = [];
+                            const purchaseList: Grocery[] = [];
+                            const filter = "Sabonete";
+
+                            const component = shallow(<GroceryCheckList showList={showList} canBeAddedToList={addToList} reload={reload} purchaseList={purchaseList} filter={filter} />);
+
+                            const add = component.find({ testID: "add" });
+                            const handler = add.prop("onPress");
+
+                            if (handler !== undefined) {
+                                handler(true);
+                            }
+
+                            await expect(mockInsertGrocery).toBeCalled();
+                            expect(mockAddToPurchaseList).toBeCalled();
+                            expect(mockToastAndroid).not.toBeCalled();
+
+                        });
+
+                        describe('handle erros', () => {
+                            it('database error', async () => {
+                                const showList: Grocery[] = [];
+                                const purchaseList: Grocery[] = [];
+                                const filter = "Sabonete";
+                                
+                                mockInsertGrocery.mockResolvedValueOnce(null);
+
+                                const component = shallow(<GroceryCheckList showList={showList} canBeAddedToList={addToList} reload={reload} purchaseList={purchaseList} filter={filter} />);
+
+                                const add = component.find({ testID: "add" });
+                                const handler = add.prop("onPress");
+
+                                if (handler !== undefined) {
+                                    handler();
+                                }
+
+                                await expect(mockInsertGrocery).toBeCalled();
+                                expect(mockAddToPurchaseList).not.toBeCalled();
+
+                            });
+
+                            it('filter error', async () => {
+                                const showList: Grocery[] = [];
+                                const purchaseList: Grocery[] = [];
+                                const filter = "";
+
+                                const component = shallow(<GroceryCheckList showList={showList} canBeAddedToList={addToList} reload={reload} purchaseList={purchaseList} filter={filter} />);
+
+                                const add = component.find({ testID: "add" });
+                                const handler = add.prop("onPress");
+
+                                if (handler !== undefined) {
+                                    handler();
+                                }
+
+                                await expect(mockInsertGrocery).not.toBeCalled();
+                                expect(mockAddToPurchaseList).not.toBeCalled();
+
+                            });
+                        });
+                    })
+                });
             });
         });
     });

@@ -20,9 +20,9 @@ const GroceryCheckList: React.FC<GroceryCheckListProps> = ({ showList, purchaseL
     const [emptyMessageOption, setEmptyMessageOption] = useState<"EXISTE" | "ADICIONAR" | "NAO EXISTE">();
 
     async function handleAddGrocery() {
-        if (filter) {
+        if (filter !== undefined && filter.length > 0) {
             const grocery = await insertGrocery(filter);
-            if (grocery) {
+            if (grocery !== null) {
                 addToPurchaseList(grocery);
 
                 reload();
@@ -37,9 +37,8 @@ const GroceryCheckList: React.FC<GroceryCheckListProps> = ({ showList, purchaseL
     }
 
     function handleEmptyMessage() {
-        if (canBeAddedToList && purchaseList && filter) {
+        if (canBeAddedToList && purchaseList !== undefined && filter !== undefined) {
             const isInPurchaseList = purchaseList.find((elem) => elem.name === filter);
-
             if (isInPurchaseList) {
                 setEmptyMessageOption("EXISTE");
             }
@@ -76,7 +75,7 @@ const GroceryCheckList: React.FC<GroceryCheckListProps> = ({ showList, purchaseL
     function displayEmptyMessage() {
         switch (emptyMessageOption) {
             case "ADICIONAR":
-                return (<TouchableHighlight onPress={handleAddGrocery}>
+                return (<TouchableHighlight testID="add" onPress={handleAddGrocery}>
                     <View style={{ flexDirection: "row" }}>
                         <Text style={{ color: variables.PRIMARY_COLOR, fontSize: variables.FONT_SIZE_MEDIUM }}>Gostaria de adicionar </Text>
                         <Text style={{ color: variables.PRIMARY_COLOR, fontSize: variables.FONT_SIZE_MEDIUM, fontWeight: "bold" }}>{filter}</Text>
