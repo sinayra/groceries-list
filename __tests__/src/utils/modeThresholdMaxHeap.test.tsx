@@ -6,7 +6,7 @@ describe('ModeThresholdMaxHeap', () => {
         let maxHeap = new MaxHeap();
         const value = maxHeap.getMax();
 
-        expect(value).toBeUndefined();
+        expect(value).toBe(0);
     });
 
     it('Insert one element and get max', () => {

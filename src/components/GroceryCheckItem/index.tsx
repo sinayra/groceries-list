@@ -99,7 +99,7 @@ const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, canBeAddedToL
             </View>
 
             {canBeAddedToList === false &&
-                <View style={styles.quantity}>
+                <View style={styles.quantity} testID="cannotBeAddToList">
                     <TouchableOpacity onPress={() => handleQuantity(true)}>
                         <FontAwesome name="plus-circle" size={variables.FONT_SIZE_LARGE + 10} color={variables.TEXT_COLOR} />
                     </TouchableOpacity>

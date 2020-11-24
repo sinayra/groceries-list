@@ -51,6 +51,7 @@
     "ios": "expo start --ios",
     "web": "expo web",
     "eject": "expo eject",
+    "deploy": "expo publish",
     "update:packages": "npm audit fix -f && npm-check-updates -u && npm update && npm install",
     "test": "jest",
     "test:coverage": "jest --verbose --coverage --watchAll",

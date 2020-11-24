@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import {
-  Text,
+  Text, View
 } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import CheckBox from '@react-native-community/checkbox';
 
 import GroceryCheckItem from "../../../src/components/GroceryCheckItem";
@@ -124,8 +125,6 @@ describe('<AutoComplete />', () => {
       const reload = jest.fn();
       const addToList = false;
 
-      
-
       const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
       const checkbox = component.find(CheckBox);
 
@@ -138,9 +137,40 @@ describe('<AutoComplete />', () => {
 
       expect(mockRemove).toBeCalled();
       expect(mockAdd).not.toBeCalled();
-      expect(reload).toBeCalled();
 
     });
+
+    describe('Handle quantity', () => {
+      it('loads quantity icons', async () => {
+        const item: Grocery = {
+          name: "Sabonete",
+          listId: "0",
+          listQuantity: 1,
+          purchases: [{
+            "date": 1599264000000,
+            "price": 1.34,
+            "quantity": 1
+          }]
+        }
+        const reload = jest.fn();
+        const addToList = false;
+  
+        const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />).find({ testID: "cannotBeAddToList" });
+        const icons = component.find(FontAwesome).getElements();
+        const quantity = component.find(Text).getElement().props.children;
+  
+        expect(icons).toHaveLength(2);
+
+        const add = icons[0].props.name;
+        const sub = icons[1].props.name;
+
+        expect(add).toEqual("plus-circle");
+        expect(sub).toEqual("minus-circle");
+        expect(quantity).toContain(1);
+      });
+
+    });
+
   });
 
   describe('Item not in the purchase list', () => {
@@ -213,8 +243,25 @@ describe('<AutoComplete />', () => {
 
       expect(mockAdd).toBeCalled();
       expect(mockRemove).not.toBeCalled();
-      expect(reload).toBeCalled();
 
+    });
+
+    it('Does not loads quantity icons', async () => {
+      const item: Grocery = {
+        name: "Sabonete",
+        purchases: [{
+          "date": 1599264000000,
+          "price": 1.34,
+          "quantity": 1
+        }]
+      }
+      const reload = jest.fn();
+      const addToList = true;
+
+      const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />).find({ testID: "cannotBeAddToList" });
+      const icons = component.find(FontAwesome).getElements();
+
+      expect(icons).toHaveLength(0);
     });
 
   });
