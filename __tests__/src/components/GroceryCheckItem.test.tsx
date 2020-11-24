@@ -9,7 +9,7 @@ import { Grocery } from "../../../src/types/Grocery";
 import * as database from "../../../src/services/database";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-describe('<AutoComplete />', () => {
+describe('<Grocery Check Item />', () => {
   let mockAdd: jest.SpyInstance<Promise<200 | 500>, [id: string | undefined]>;
   let mockRemove: jest.SpyInstance<Promise<200 | 500>, [idList: string | undefined]>;
   let mockQuantity: jest.SpyInstance<Promise<200 | 500>, [idList: string | undefined, quantity: number]>;
