@@ -1,14 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  Text, View
-} from 'react-native';
+import { Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import CheckBox from '@react-native-community/checkbox';
 
 import GroceryCheckItem from "../../../src/components/GroceryCheckItem";
 import { Grocery } from "../../../src/types/Grocery";
 import * as database from "../../../src/services/database";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 describe('<AutoComplete />', () => {
   let mockAdd: jest.SpyInstance<Promise<200 | 500>, [id: string | undefined]>;
@@ -154,11 +153,11 @@ describe('<AutoComplete />', () => {
         }
         const reload = jest.fn();
         const addToList = false;
-  
+
         const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />).find({ testID: "cannotBeAddToList" });
         const icons = component.find(FontAwesome).getElements();
         const quantity = component.find(Text).getElement().props.children;
-  
+
         expect(icons).toHaveLength(2);
 
         const add = icons[0].props.name;
@@ -169,6 +168,94 @@ describe('<AutoComplete />', () => {
         expect(quantity).toContain(1);
       });
 
+      it('add quantity', async () => {
+        const item: Grocery = {
+          name: "Sabonete",
+          listId: "0",
+          listQuantity: 1,
+          purchases: [{
+            "date": 1599264000000,
+            "price": 1.34,
+            "quantity": 1
+          }]
+        }
+        const reload = jest.fn();
+        const addToList = false;
+
+        const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
+        const icons = component.find({ testID: "cannotBeAddToList" }).find(TouchableOpacity);
+        const add = icons.find({ testID: "add" });
+
+        const handler = add.prop("onPress");
+
+        if (handler !== undefined) {
+          handler(true);
+        }
+
+        const price = component.find({ testID: "price" }).find(Text).getElement().props.children;
+
+        expect(mockQuantity).toBeCalled();
+        expect(price).toContain((2.68).toFixed(2));
+      });
+
+      describe('subtract quantity', () => {
+        it('multiple elements', async () => {
+          const item: Grocery = {
+            name: "Sabonete",
+            listId: "0",
+            listQuantity: 5,
+            purchases: [{
+              "date": 1599264000000,
+              "price": 1.34,
+              "quantity": 1
+            }]
+          }
+          const reload = jest.fn();
+          const addToList = false;
+  
+          const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
+          const icons = component.find({ testID: "cannotBeAddToList" }).find(TouchableOpacity);
+          const sub = icons.find({ testID: "sub" });
+  
+          const handler = sub.prop("onPress");
+  
+          if (handler !== undefined) {
+            handler(false);
+          }
+  
+          const price = component.find({ testID: "price" }).find(Text).getElement().props.children;
+  
+          expect(mockQuantity).toBeCalled();
+          expect(price).toContain((5.36).toFixed(2));
+        });
+
+        it('one element', async () => {
+          const item: Grocery = {
+            name: "Sabonete",
+            listId: "0",
+            listQuantity: 1,
+            purchases: [{
+              "date": 1599264000000,
+              "price": 1.34,
+              "quantity": 1
+            }]
+          }
+          const reload = jest.fn();
+          const addToList = false;
+  
+          const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
+          const icons = component.find({ testID: "cannotBeAddToList" }).find(TouchableOpacity);
+          const sub = icons.find({ testID: "sub" });
+  
+          const handler = sub.prop("onPress");
+  
+          if (handler !== undefined) {
+            handler(false);
+          }
+    
+          expect(mockRemove).toBeCalled();
+        });
+      });
     });
 
   });

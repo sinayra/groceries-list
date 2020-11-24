@@ -100,19 +100,19 @@ const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, canBeAddedToL
 
             {canBeAddedToList === false &&
                 <View style={styles.quantity} testID="cannotBeAddToList">
-                    <TouchableOpacity onPress={() => handleQuantity(true)}>
+                    <TouchableOpacity onPress={() => handleQuantity(true)} testID="add">
                         <FontAwesome name="plus-circle" size={variables.FONT_SIZE_LARGE + 10} color={variables.TEXT_COLOR} />
                     </TouchableOpacity>
 
                     <Text style={styles.quantityText}>x{item.listQuantity}</Text>
 
-                    <TouchableOpacity onPress={() => handleQuantity(false)}>
+                    <TouchableOpacity onPress={() => handleQuantity(false)} testID="sub">
                         <FontAwesome name="minus-circle" size={variables.FONT_SIZE_LARGE + 10} color={variables.TEXT_COLOR} />
                     </TouchableOpacity>
                 </View>
             }
 
-            <View style={styles.price}>
+            <View style={styles.price} testID="price">
                 <Text style={{ fontSize: variables.FONT_SIZE_LARGE, color: variables.TEXT_COLOR, opacity: 0.5 }}>+ €{price.toFixed(2)}</Text>
             </View>
 
