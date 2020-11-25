@@ -82,7 +82,7 @@ const GroceryCheckItem: React.FC<GroceryCheckItemProps> = ({ item, canBeAddedToL
                     value={check}
                     onValueChange={(value) => handleAddToList(value)}
                 />
-                <View style={styles.textItem}>
+                <View style={styles.textItem} testID="item-name">
                     <View>
                         <Text
                             style={{

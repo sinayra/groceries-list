@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Grocery Check List /> Items already in purchase list loads without crashing Snapshot 1`] = `
+<React.Fragment>
+  <FlatList
+    data={
+      Array [
+        Object {
+          "listId": "0",
+          "listQuantity": 1,
+          "name": "Sabonete",
+          "purchases": Array [
+            Object {
+              "date": 1599264000000,
+              "price": 1.34,
+              "quantity": 1,
+            },
+          ],
+        },
+      ]
+    }
+    disableVirtualization={false}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
+    onEndReachedThreshold={2}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    testID="list"
+    updateCellsBatchingPeriod={1000}
+    windowSize={21}
+  />
+</React.Fragment>
+`;
+
+exports[`<Grocery Check List /> Items that can be added to purchase list loads without crashing Snapshot 1`] = `
+<React.Fragment>
+  <FlatList
+    data={
+      Array [
+        Object {
+          "name": "Sabonete",
+          "purchases": Array [
+            Object {
+              "date": 1599264000000,
+              "price": 1.34,
+              "quantity": 1,
+            },
+          ],
+        },
+      ]
+    }
+    disableVirtualization={false}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
+    onEndReachedThreshold={2}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    testID="list"
+    updateCellsBatchingPeriod={1000}
+    windowSize={21}
+  />
+</React.Fragment>
+`;

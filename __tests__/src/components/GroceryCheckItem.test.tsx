@@ -35,6 +35,23 @@ describe('<Grocery Check Item />', () => {
       addToList = false;
     });
 
+    it('Snapshot', async () => {
+      const item: Grocery = {
+        name: "Sabonete",
+        listId: "0",
+        listQuantity: 1,
+        purchases: [{
+          "date": 1599264000000,
+          "price": 1.34,
+          "quantity": 1
+        }]
+      }
+
+      const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
+
+      expect(component.getElement()).toMatchSnapshot();
+    });
+
     it('Load text', async () => {
       const item: Grocery = {
         name: "Sabonete",
@@ -259,6 +276,21 @@ describe('<Grocery Check Item />', () => {
     beforeAll(() => {
       reload = jest.fn();
       addToList = true;
+    });
+
+    it('Snapshot', async () => {
+      const item: Grocery = {
+        name: "Sabonete",
+        purchases: [{
+          "date": 1599264000000,
+          "price": 1.34,
+          "quantity": 1
+        }]
+      };
+
+      const component = shallow(<GroceryCheckItem item={item} canBeAddedToList={addToList} reload={reload} />);
+
+      expect(component.getElement()).toMatchSnapshot();
     });
 
     it('Load text', async () => {

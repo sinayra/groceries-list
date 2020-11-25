@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Grocery Check Item /> Item in the purchase list Snapshot 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "opacity": 1,
+    }
+  }
+>
+  <Component
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 3,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <ForwardRef(CheckBoxWithRef)
+      disabled={false}
+      onValueChange={[Function]}
+      value={true}
+    />
+    <Component
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+      testID="item-name"
+    >
+      <Component>
+        <Component
+          style={
+            Object {
+              "color": "rgb(28, 28, 30)",
+              "fontFamily": "Ubuntu_700Bold",
+              "fontSize": 16,
+            }
+          }
+        >
+          Sabonete
+        </Component>
+      </Component>
+    </Component>
+  </Component>
+  <Component
+    style={
+      Object {
+        "flexDirection": "row",
+      }
+    }
+    testID="cannotBeAddToList"
+  >
+    <TouchableOpacity
+      activeOpacity={0.2}
+      delayLongPress={600}
+      extraButtonProps={
+        Object {
+          "rippleColor": "transparent",
+        }
+      }
+      onPress={[Function]}
+      testID="add"
+    >
+      <Icon
+        allowFontScaling={false}
+        color="rgb(28, 28, 30)"
+        name="plus-circle"
+        size={26}
+      />
+    </TouchableOpacity>
+    <Component
+      style={
+        Object {
+          "paddingLeft": 10,
+          "paddingRight": 10,
+        }
+      }
+    >
+      x
+      1
+    </Component>
+    <TouchableOpacity
+      activeOpacity={0.2}
+      delayLongPress={600}
+      extraButtonProps={
+        Object {
+          "rippleColor": "transparent",
+        }
+      }
+      onPress={[Function]}
+      testID="sub"
+    >
+      <Icon
+        allowFontScaling={false}
+        color="rgb(28, 28, 30)"
+        name="minus-circle"
+        size={26}
+      />
+    </TouchableOpacity>
+  </Component>
+  <Component
+    style={
+      Object {
+        "flex": 1,
+        "paddingLeft": 20,
+      }
+    }
+    testID="price"
+  >
+    <Component
+      style={
+        Object {
+          "color": "rgb(28, 28, 30)",
+          "fontSize": 16,
+          "opacity": 0.5,
+        }
+      }
+    >
+      + €
+      1.34
+    </Component>
+  </Component>
+</Component>
+`;
+
+exports[`<Grocery Check Item /> Item not in the purchase list Snapshot 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "opacity": 0.5,
+    }
+  }
+>
+  <Component
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 3,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <ForwardRef(CheckBoxWithRef)
+      disabled={false}
+      onValueChange={[Function]}
+      value={false}
+    />
+    <Component
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+      testID="item-name"
+    >
+      <Component>
+        <Component
+          style={
+            Object {
+              "color": "rgb(28, 28, 30)",
+              "fontFamily": "Ubuntu_700Bold",
+              "fontSize": 16,
+            }
+          }
+        >
+          Sabonete
+        </Component>
+      </Component>
+    </Component>
+  </Component>
+  <Component
+    style={
+      Object {
+        "flex": 1,
+        "paddingLeft": 20,
+      }
+    }
+    testID="price"
+  >
+    <Component
+      style={
+        Object {
+          "color": "rgb(28, 28, 30)",
+          "fontSize": 16,
+          "opacity": 0.5,
+        }
+      }
+    >
+      + €
+      1.34
+    </Component>
+  </Component>
+</Component>
+`;

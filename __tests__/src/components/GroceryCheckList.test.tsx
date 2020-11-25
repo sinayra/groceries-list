@@ -40,6 +40,23 @@ describe('<Grocery Check List />', () => {
         });
 
         describe('loads without crashing', () => {
+            it('Snapshot', async () => {
+                const showList: Grocery[] = [{
+                    name: "Sabonete",
+                    listId: "0",
+                    listQuantity: 1,
+                    purchases: [{
+                        "date": 1599264000000,
+                        "price": 1.34,
+                        "quantity": 1
+                    }]
+                }];
+
+                const component = shallow(<GroceryCheckList showList={showList} canBeAddedToList={addToList} reload={reload} />);
+
+                expect(component.getElement()).toMatchSnapshot();
+            });
+
             it('multiple elements', () => {
                 const showList: Grocery[] = [
                     {
@@ -136,6 +153,22 @@ describe('<Grocery Check List />', () => {
         });
 
         describe('loads without crashing', () => {
+
+            it('Snapshot', async () => {
+                const showList: Grocery[] = [{
+                    name: "Sabonete",
+                    purchases: [{
+                        "date": 1599264000000,
+                        "price": 1.34,
+                        "quantity": 1
+                    }]
+                }];
+
+                const component = shallow(<GroceryCheckList showList={showList} canBeAddedToList={addToList} reload={reload} />);
+
+                expect(component.getElement()).toMatchSnapshot();
+            });
+
             it('multiple elements', () => {
                 const showList: Grocery[] = [
                     {
@@ -481,7 +514,7 @@ describe('<Grocery Check List />', () => {
                                 const showList: Grocery[] = [];
                                 const purchaseList: Grocery[] = [];
                                 const filter = "Sabonete";
-                                
+
                                 mockInsertGrocery.mockResolvedValueOnce(null);
 
                                 const component = shallow(<GroceryCheckList showList={showList} canBeAddedToList={addToList} reload={reload} purchaseList={purchaseList} filter={filter} />);
